@@ -1,0 +1,104 @@
+---
+title: "Report Title (.)"
+author: 
+    - Boyu Cao
+    - Jiayi Yu
+    - Yijia Liu
+    - Ziyue Yang
+date: "15/10/2020"
+output: pdf_document
+abstract: "This is an abstract. (.)"
+---
+
+```{r setp, cache=FALSE}
+# Importing simulated data
+# knitr::read_chunk('model.R')
+source('model.R')
+```
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(brms)
+# Setting seed as the last four digits of Ziyue Yang's student number
+set.seed(4759)
+knitr::opts_chunk$set(fig.height=3, fig.width=12, echo = FALSE)
+df <- read.csv('gss.csv')
+```
+
+# Introduction (.)
+
+<!-- For reference only -->
+<!-- ################## -->
+## Background
+Statistics Canada collected data on the topic of giving, volunteering and participating for the sixth time in 2013. Data were previously collected by the National Survey of Giving, Volunteering and Participating (NSGVP) in 1997 and 2000, and by the Canada Survey of Giving, Volunteering and Participating (CSGVP) in 2004, 2007 and 2010.
+
+In 1997, the National Survey of Giving, Volunteering and Participating (NSGVP) provided the first comprehensive look at the contributions that Canadians make to one another through their gifts of time and money. The NSGVP was developed through a unique partnership of federal government departments and non-profit and voluntary organizations that included the Canadian Centre for Philanthropy (now operating under the name of Imagine Canada), Human Resources and Skills Development Canada (now Employment and Social Development Canada (ESDC)), Canadian Heritage, Health Canada, Statistics Canada and Volunteer Canada. Using a similar framework, this survey was conducted again in 2000 as part of the federal government’s Voluntary Sector Initiative (VSI). In 2001, the federal government provided funding to establish a permanent survey program at Statistics Canada on charitable giving, volunteering and participating. The survey was renamed the Canada Survey of Giving, Volunteering and Participating (CSGVP) to distinguish it from surveys in other countries. Following the 2010 CSGVP, the survey became part of Statistics Canada’s General Social Survey (GSS) program.
+
+## Objectives of the General Social Survey
+The GSS program, established in 1985, conducts surveys across the ten provinces. The GSS is recognized for its regular collection of cross-sectional data that allows for trend analysis, and its capacity to test and develop new concepts that address current or emerging issues.
+The two primary objectives of the General Social Survey are:
+
+1. To gather data on social trends in order to monitor changes in the living conditions and well-being of Canadians over time; and
+
+2. To provide immediate information on specific social policy issues of current or emerging interest.
+To meet these objectives, the data collected by the GSS comprise two components: core and classification content. Core content giving, volunteering and participating in the case of the 2013 GSS GVP – measures changes in society related to living conditions and well-being, and supplies data to inform specific policy issues. Classification variables (such as age, sex, education, and income) help delineate population groups for use in the analysis of the core data.
+The 2013 GSS GVP also provides timely data to the Canadian System of National Accounts2 and informs the charitable and voluntary sector in program decisions that relate to the sector.
+<!-- ################## -->
+
+# Data (.)
+
+```{r plots}
+
+# Male Female dist
+male_female <- ggplot(data = df, aes(x = sex)) + geom_bar() + labs(title = "Number of Male versus Female" )
+male_female
+
+# Degree plot
+degree_dist <- ggplot(data = df, aes(x = degree)) + geom_bar() + labs(title = "Degree Dist.")
+degree_dist
+
+# Degree plot filled with work
+degree_dist_work <- ggplot(data = df, aes(x = degree, fill = is_work)) + geom_bar() + labs(title = "Degree Dist.")
+degree_dist_work
+
+citizen_province_group <- ggplot(data = df, aes(y = province, fill=is_citizens)) + geom_bar() + labs(title = "province")
+citizen_province_group
+
+degree_happy <- ggplot(data=df, aes(x = degree, fill=happiness)) + geom_bar() + labs("Happiness, deg")
+degree_happy
+
+work_happy <- ggplot(data=df, aes(x = is_work, fill=happiness)) + geom_bar() + labs("Happiness", "deg")
+work_happy
+```
+
+# Model (.)
+
+
+# Results (.)
+
+
+# Discussion (.)
+
+## Weaknesses and Potentail Improvements
+
+
+# References (.)
+
+
+<!-- For brms -->
+<!-- ######## -->
+
+* Bürkner P. C. (2017). brms: An R Package for Bayesian Multilevel Models using Stan. Journal of Statistical Software. 80(1), 1-28. doi.org/10.18637/jss.v080.i01
+
+* Bürkner P. C. (2018). Advanced Bayesian Multilevel Modeling with the R Package brms. The R Journal. 10(1), 395-411. doi.org/10.32614/RJ-2018-017
+
+<!-- ######## -->
+
+<!-- For Stan -->
+<!-- ######## -->
+
+* Carpenter B., Gelman A., Hoffman M. D., Lee D., Goodrich B., Betancourt M., Brubaker M., Guo J., Li P., and Riddell A. (2017). Stan: A probabilistic programming language. Journal of Statistical Software. 76(1). 10.18637/jss.v076.i01
+
+<!-- ######## -->
+
+# Appendix (. Optional)
