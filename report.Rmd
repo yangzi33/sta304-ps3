@@ -21,7 +21,7 @@ library(tidyverse)
 library(brms)
 # Setting seed as the last four digits of Ziyue Yang's student number
 set.seed(4759)
-knitr::opts_chunk$set(fig.height=3, fig.width=12, echo = FALSE)
+knitr::opts_chunk$set(fig.height=3, fig.width=10, echo = FALSE)
 df <- read.csv('gss.csv')
 ```
 
@@ -69,6 +69,9 @@ degree_happy
 
 work_happy <- ggplot(data=df, aes(x = is_work, fill=happiness)) + geom_bar() + labs("Happiness", "deg")
 work_happy
+
+
+
 ```
 
 # Model (.)
@@ -79,7 +82,7 @@ work_happy
 
 # Discussion (.)
 
-## Weaknesses and Potentail Improvements
+## Weaknesses and Potential Improvements
 
 
 # References (.)
