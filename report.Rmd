@@ -10,22 +10,31 @@ output: pdf_document
 abstract: "This is an abstract. (.)"
 ---
 
-```{r setp, cache=FALSE}
-# Importing simulated data
-# knitr::read_chunk('model.R')
-source('model.R')
-```
 
-```{r setup, include=FALSE}
-library(tidyverse)
-library(brms)
+```{r setup, include=FALSE, cache=FALSE}
 # Setting seed as the last four digits of Ziyue Yang's student number
 set.seed(4759)
+library(tidyverse)
+library(brms)
+source('model.R')
+
+# Configuring global figure settings
 knitr::opts_chunk$set(fig.height=3, fig.width=10, echo = FALSE)
-df <- read.csv('gss.csv')
+df <- read.csv('gss-time-stress/AAKQKMYl.csv')
+
+rush <- select(df, contains("GTU_Q110"))
+rush
+
+time_stress <- read.csv('gss-time-stress/gss-time-stress.csv')
+time_stress
 ```
 
 # Introduction (.)
+
+A topic that has intrigued us is the relationship of work hours to subjective stress level.
+
+
+---
 
 <!-- For reference only -->
 <!-- ################## -->
@@ -47,6 +56,15 @@ The 2013 GSS GVP also provides timely data to the Canadian System of National Ac
 
 # Data (.)
 
+Throughout the report, regression techniques are illustrated using data from the **General Social Survey (GSS)**^[gss]^. GSS has a total of $N$ respondents in the survey, and $\Gamma$ **tofill** of the respondents did not answer the question. Hence, the analyses are based on $N-\Gamma$ respondents that provided valid answers to the questions.
+
+Several variables in the 2017 GSS will be used for the prediction. The predictors chosen are:
+* marital status
+* age
+* self-assessed health
+* 
+
+<!-- 
 ```{r plots}
 
 # Male Female dist
@@ -72,7 +90,7 @@ work_happy
 
 
 
-```
+``` -->
 
 # Model (.)
 
@@ -90,6 +108,8 @@ work_happy
 
 <!-- For brms -->
 <!-- ######## -->
+
+* [gss]: General Social Survey (GSS) on Family (cycle 31), 2017
 
 * Bürkner P. C. (2017). brms: An R Package for Bayesian Multilevel Models using Stan. Journal of Statistical Software. 80(1), 1-28. doi.org/10.18637/jss.v080.i01
 
