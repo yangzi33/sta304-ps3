@@ -1,5 +1,6 @@
 ---
 title: "Report Title (.)"
+subtitle: "https://github.com/yangzi33/sta304-ps3"
 author: 
     - Boyu Cao
     - Jiayi Yu
@@ -16,81 +17,54 @@ abstract: "This is an abstract. (.)"
 set.seed(4759)
 library(tidyverse)
 library(brms)
+# Run modeling
 source('model.R')
 
 # Configuring global figure settings
-knitr::opts_chunk$set(fig.height=3, fig.width=10, echo = FALSE)
-df <- read.csv('gss-time-stress/AAKQKMYl.csv')
+knitr::opts_chunk$set(fig.height=3, fig.width=6, echo = FALSE)
 
-rush <- select(df, contains("GTU_Q110"))
-rush
+# df <- read.csv('gss-time-stress/gss-time-stress.csv')
+# df
 
-time_stress <- read.csv('gss-time-stress/gss-time-stress.csv')
-time_stress
 ```
 
 # Introduction (.)
 
-A topic that has intrigued us is the relationship of work hours to subjective stress level.
+A topic that intrigues us is the relationship of marital status to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will the focus our analyses. 
 
-
----
-
-<!-- For reference only -->
-<!-- ################## -->
-## Background
-Statistics Canada collected data on the topic of giving, volunteering and participating for the sixth time in 2013. Data were previously collected by the National Survey of Giving, Volunteering and Participating (NSGVP) in 1997 and 2000, and by the Canada Survey of Giving, Volunteering and Participating (CSGVP) in 2004, 2007 and 2010.
-
-In 1997, the National Survey of Giving, Volunteering and Participating (NSGVP) provided the first comprehensive look at the contributions that Canadians make to one another through their gifts of time and money. The NSGVP was developed through a unique partnership of federal government departments and non-profit and voluntary organizations that included the Canadian Centre for Philanthropy (now operating under the name of Imagine Canada), Human Resources and Skills Development Canada (now Employment and Social Development Canada (ESDC)), Canadian Heritage, Health Canada, Statistics Canada and Volunteer Canada. Using a similar framework, this survey was conducted again in 2000 as part of the federal government’s Voluntary Sector Initiative (VSI). In 2001, the federal government provided funding to establish a permanent survey program at Statistics Canada on charitable giving, volunteering and participating. The survey was renamed the Canada Survey of Giving, Volunteering and Participating (CSGVP) to distinguish it from surveys in other countries. Following the 2010 CSGVP, the survey became part of Statistics Canada’s General Social Survey (GSS) program.
-
-## Objectives of the General Social Survey
-The GSS program, established in 1985, conducts surveys across the ten provinces. The GSS is recognized for its regular collection of cross-sectional data that allows for trend analysis, and its capacity to test and develop new concepts that address current or emerging issues.
-The two primary objectives of the General Social Survey are:
-
-1. To gather data on social trends in order to monitor changes in the living conditions and well-being of Canadians over time; and
-
-2. To provide immediate information on specific social policy issues of current or emerging interest.
-To meet these objectives, the data collected by the GSS comprise two components: core and classification content. Core content giving, volunteering and participating in the case of the 2013 GSS GVP – measures changes in society related to living conditions and well-being, and supplies data to inform specific policy issues. Classification variables (such as age, sex, education, and income) help delineate population groups for use in the analysis of the core data.
-The 2013 GSS GVP also provides timely data to the Canadian System of National Accounts2 and informs the charitable and voluntary sector in program decisions that relate to the sector.
-<!-- ################## -->
+*In the modern society, there exists various issues. (blah blah blah)*
 
 # Data (.)
 
-Throughout the report, regression techniques are illustrated using data from the **General Social Survey (GSS)**^[gss]^. GSS has a total of $N$ respondents in the survey, and $\Gamma$ **tofill** of the respondents did not answer the question. Hence, the analyses are based on $N-\Gamma$ respondents that provided valid answers to the questions.
+Throughout the article, regression models will be illustrated using data from the twenty fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010^[1]^. 
 
-Several variables in the 2017 GSS will be used for the prediction. The predictors chosen are:
-* marital status
-* age
-* self-assessed health
-* 
+The target population for this survey includes all persons 15 years of age and older in Canada, excluding residents of the Yukon, Northwest Territories, and Nunavut, as well as full-time residents of institutions. Computer assisted telephone interviewing was used to collect data for GSS, and households were reached by calling a series of randomly-generated phone numbers.
 
-<!-- 
-```{r plots}
+In the GSS, mental health is assessed by a question asking "In general, would you say your mental health is: ...", with provided answers "Excellent, Very Good, Good, Fair", or "Don't know" for those who are unsure about answering. Of the total of 15,390 respondents in the survey, 203 did not choose to answer, and 45 answered "Don't know". Therefore, analyses in our report are based on 15,142 respondents providing valid answers to this question. 
 
-# Male Female dist
-male_female <- ggplot(data = df, aes(x = sex)) + geom_bar() + labs(title = "Number of Male versus Female" )
-male_female
+Due to the fact that there are merely four values, we treat them as a binary variable, by coding value $1$ for those who answered "Excellent" and "Very Good", and $0$ otherwise. The mean of this binary variable is 0.608 or 7224/11873, the proportion of those who are "mentally healthy" in the sample, denoted $p$, which can be viewed as the probability that a randomly selected sample will be "mentally healthy".
 
-# Degree plot
-degree_dist <- ggplot(data = df, aes(x = degree)) + geom_bar() + labs(title = "Degree Dist.")
-degree_dist
+Our focus will be modeling mental health as a function of various variables. Two of the independent variables are treated as interval: age, income, while gender and marital status will be dummies. We will examine the relationship between mental health and marital status.
 
-# Degree plot filled with work
-degree_dist_work <- ggplot(data = df, aes(x = degree, fill = is_work)) + geom_bar() + labs(title = "Degree Dist.")
-degree_dist_work
-
-citizen_province_group <- ggplot(data = df, aes(y = province, fill=is_citizens)) + geom_bar() + labs(title = "province")
-citizen_province_group
-
-degree_happy <- ggplot(data=df, aes(x = degree, fill=happiness)) + geom_bar() + labs("Happiness, deg")
-degree_happy
-
-work_happy <- ggplot(data=df, aes(x = is_work, fill=happiness)) + geom_bar() + labs("Happiness", "deg")
-work_happy
+<!-- - Marital status: single, married, living common-law, divorced, and widowed. This will be the main response variable -->
+<!-- - Age group of the respondent: by groups of 10 such as "45 to 54". -->
+<!-- - Gender of the respondent: male and female. -->
+<!-- - Annual income grouped by ranges:  -->
+<!--   - No income,  -->
+<!--   - Less than \$5000, -->
+<!--   - 7788 -->
+<!--   - \$0 to \$49,999, \$50,000 to \$100,000, over \$100,000. -->
 
 
+```{r, echo=FALSE}
+raw_plot <- ggplot(df, aes(x = marital, y = mental_dummy)) + geom_point()
+raw_plot
+```
 
-``` -->
+*For each denoted $X_1,X_2,\dots,X_k$, .. respectively ... Consider ...*
+
+**Frame, Plot, Raw Plot**
+
 
 # Model (.)
 
@@ -123,5 +97,14 @@ work_happy
 * Carpenter B., Gelman A., Hoffman M. D., Lee D., Goodrich B., Betancourt M., Brubaker M., Guo J., Li P., and Riddell A. (2017). Stan: A probabilistic programming language. Journal of Statistical Software. 76(1). 10.18637/jss.v076.i01
 
 <!-- ######## -->
+
+* R Core Team (2020). R: A language and environment for statistical computing. R Foundation for Statistical
+  Computing, Vienna, Austria. URL https://www.R-project.org/.
+  
+* Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+  https://doi.org/10.21105/joss.01686
+
+* Sam Firke (2020). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.0.1.
+  https://CRAN.R-project.org/package=janitor
 
 # Appendix (. Optional)
