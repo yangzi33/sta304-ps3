@@ -27,9 +27,9 @@ knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE)
 
 ```
 
-# Introduction (.)
+# Introduction
 
-A topic that intrigues us is the relationship of marital status to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will be the focus of our analyses. 
+A topic that intrigues us is the relationship of annual income to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will be the focus of our analyses. Research shows that there has been increasing concern about the impact of the global economic recession on mental health (Sareen J 2011). We will investigate the relationship between the annual income and 
 
 *In the modern society, there exists various issues. (blah blah blah)*
 
@@ -62,9 +62,8 @@ raw_scatter <- ggplot(df, aes(y = mental_dummy, x = uniform_income)) + geom_poin
 raw_scatter
 ```
 
-*For each denoted $X_1,X_2,\dots,X_k$, .. respectively ... Consider ...*
 
-**Frame**
+**Frame? **
 
 
 # Model
@@ -92,7 +91,7 @@ $$
 $$
  such that the logistic regression becomes
 $$
-\log\left( \frac{p}{1-p} \right)=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\dots+\beta_{14}X_{14},
+\log\left( \frac{p}{1-p} \right)=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\dots+\beta_{13}X_{13},
 $$
 based on which we examine the relationship between mental health and income. We wish to estimate model by estimating the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
 
@@ -110,14 +109,28 @@ model_summary
 
 From the table, we have the following estimated coefficients:
 
-- $\hat{\beta_0}=0.5277$
-- $\hat{\beta_1}=$
+- $\hat{\beta_0}=0.5277$,
+- $\hat{\beta_1}=1.123\times10^{-5}$,
+- $\hat{\beta_2}=-0.5831$,
+- $\hat{\beta_3}=-0.8403$,
+- $\hat{\beta_4}=-0.8924$,
+- $\hat{\beta_5}=-0.7001$,
+- $\hat{\beta_6}=-0.4076$,
+- $\hat{\beta_7}=-0.6825$,
+- $\hat{\beta_8}=0.0790$,
+- $\hat{\beta_9}=0.2659$,
+- $\hat{\beta_{10}}=-0.2393$,
+- $\hat{\beta_{11}}=0.0116$,
+- $\hat{\beta_{12}}=0.0353$,
+- $\hat{\beta_{13}}=-0.0527$,
+
+
 
 # Discussion (.)
 
 ## Weaknesses and Potential Improvements
 
-
+One of the major weaknesses in our model is that we do not know the specific amount of annual income of samples, but merely the range, which makes the feature `annual income` categorical, making it difficult to fit a regression model. We managed to avoid the problem by generating a random value that lies between the income interval for each sample; nonetheless, 
 
 # References (.)
 
@@ -125,7 +138,7 @@ From the table, we have the following estimated coefficients:
 <!-- For brms -->
 <!-- ######## -->
 
-* [gss]: General Social Survey (GSS) on Family (cycle 31), 2017
+* General Social Survey (GSS) on Family (cycle 31) (2017).
 
 * Bürkner P. C. (2017). brms: An R Package for Bayesian Multilevel Models using Stan. Journal of Statistical Software. 80(1), 1-28. doi.org/10.18637/jss.v080.i01
 
@@ -148,5 +161,7 @@ From the table, we have the following estimated coefficients:
 
 * Sam Firke (2020). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.0.1.
   https://CRAN.R-project.org/package=janitor
+
+* Sareen J, Afifi TO, McMillan KA, Asmundson GJG. Relationship Between Household Income and Mental Disorders: Findings   From a Population-Based Longitudinal Study. Arch Gen Psychiatry. 2011;68(4):419–427. doi:10.1001/archgenpsychiatry.2011.15
 
 # Appendix (. Optional)
