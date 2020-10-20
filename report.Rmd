@@ -6,7 +6,7 @@ author:
     - Jiayi Yu
     - Yijia Liu
     - Ziyue Yang
-date: "15/10/2020"
+date: "October 19^th^, 2020"
 output: pdf_document
 abstract: "This is an abstract. (.)"
 ---
@@ -15,7 +15,6 @@ abstract: "This is an abstract. (.)"
 ```{r setup, include=FALSE, cache=FALSE}
 # Setting seed as the last four digits of Ziyue Yang's student number
 set.seed(4759)
-library(kableExtra)
 library(tidyverse)
 library(brms)
 
@@ -29,13 +28,13 @@ knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE)
 
 # Introduction
 
-A topic that intrigues us is the relationship of annual income to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will be the focus of our analyses. Research shows that there has been increasing concern about the impact of the global economic recession on mental health (Sareen J 2011). We will investigate the relationship between the annual income and 
+A topic that intrigues us is the relationship of annual income to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will be the focus of our analyses. Research shows that there has been increasing concern about the impact of the global economic recession on mental health (Sareen J 2011). We will investigate the relationship between the annual income and mental health status alongside with various factors, including gender, marital status, age. Our assumption is that these factors are playing essential roles to bringing effects on one's mental health.
 
-*In the modern society, there exists various issues. (blah blah blah)*
+Particularly, we built and fitted a **logistic regression model** (based on Page 154, Wu, Thompson), and carried out a binary dependent variable $Y$ (i.e. a dummy variable having value of either 0 or 1) indicating the samples' mental health status. We estimated coefficients for each feature in order to predict the binary mental health outcome. 
 
-# Data (.)
+# Data
 
-Throughout the article, regression models will be illustrated using data from the twenty fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010. The csv data of selected features is available at https://github.com/yangzi33/sta304-ps3.
+Throughout, regression models will be illustrated using data from the twenty fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010. The csv data of selected features is available at https://github.com/yangzi33/sta304-ps3.
 
 The target population for this survey includes all persons 15 years of age and older in Canada, excluding residents of the Yukon, Northwest Territories, and Nunavut, as well as full-time residents of institutions. Computer assisted telephone interviewing was used to collect data for GSS, and households were reached by calling a series of randomly-generated phone numbers.
 
@@ -54,6 +53,8 @@ Our focus will be modeling mental health as a function of various variables. Two
 <!--   - 7788 -->
 <!--   - \$0 to \$49,999, \$50,000 to \$100,000, over \$100,000. -->
 
+The following plots illustrates the distribution of each age group
+
 ```{r, echo=FALSE}
 raw_bar <- ggplot(df, aes(y = mental_health, fill = annual_income)) + geom_bar() + labs(title = "Figure 1. Proportion of Mental Health Status Grouped by Annual Income", fill = "Annual Income", subtitle = "Source: Cleaned Dataset.") + ylab("Mental Health Indicator")
 raw_bar
@@ -63,8 +64,6 @@ raw_scatter
 ```
 
 
-**Frame? **
-
 
 # Model
 
@@ -72,33 +71,43 @@ We choose to use a **Logistic Regression Model** (Page 154, Wu, Thompson) on ann
 
 
 Specifically, suppose that the value of mental health measure is denoted $Y$, and 
-  - the amount of annual income is denoted $X_1$,
-  - each of the six age groups are denoted $X_2,X_3,X_4,X_5,X_6,X_7$, respectively in an increasing order,
-  - marital statuses: Living common-law, Married, Separated, Single, Widowed are denoted $X_8,X_9,X_{10},X_{11},X_{12}$, respectively.
-  - Male gender is denoted $X_13$. 
+
+- the amount of annual income is denoted $X_1$,
+
+- each of the six age groups are denoted $X_2,X_3,X_4,X_5,X_6,X_7$, respectively in an increasing order,
+
+- marital statuses: Living common-law, Married, Separated, Single, Widowed are denoted $X_8,X_9,X_{10},X_{11},X_{12}$, respectively.
+
+- Male gender is denoted $X_13$. 
 
 Furthermore, we have an intercept term $\beta_0$, and slope terms $\beta_1,\beta_2,\beta_3,\dots,\beta_{13}$ that we wish to predict throughout.
 
 With $p$ as the dependent variable, we write 
-$$
+
+\begin{equation}\label{eq1}
 p=\mathbb{P}(Y=1)=\frac{\exp(\beta_0+\sum_{i=1}^{13} \beta_iX_i)}{1+\exp(\beta_0+\sum^{13}_{i=1}\beta_iX_i)}.
-$$
+\end{equation}
+
 for some interception term $\beta_0$ and slope terms $\beta_1,\beta_2,\dots,\beta_n$.
 
 Then, we perform a linearization on $p$ using a logit transformation defined as
-$$
+
+\begin{equation}\label{eq2}
 \mbox{logit}(p):=\log\left(\frac{p}{1-p}\right),
-$$
+\end{equation}
+
  such that the logistic regression becomes
-$$
+
+\begin{equation}\label{logit}
 \log\left( \frac{p}{1-p} \right)=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\dots+\beta_{13}X_{13},
-$$
+\end{equation}
+
 based on which we examine the relationship between mental health and income. We wish to estimate model by estimating the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
 
 <!-- Based on $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$, we can predict mental health of a response outcomes by the annual income -->
 
 
-# Results (.)
+# Results
 
 The following table contains a summary of fitted linearized logistic model:
 
@@ -129,6 +138,12 @@ From the table, we have the following estimated coefficients:
 # Discussion (.)
 
 ## Weaknesses and Potential Improvements
+
+**Why Logistic Model over Linear Model?**
+
+
+
+**Outcome Variable**
 
 One of the major weaknesses in our model is that we do not know the specific amount of annual income of samples, but merely the range, which makes the feature `annual income` categorical, making it difficult to fit a regression model. We managed to avoid the problem by generating a random value that lies between the income interval for each sample; nonetheless, 
 
