@@ -1,5 +1,5 @@
 ---
-title: "Investigating Relationship Between Annual Income and Mental Health Status using Logistic Regression"
+title: "How Financial Stress Impacts Mental Health in Households"
 subtitle: "Findings from a General Social Survey"
 author: 
     - Boyu Cao
@@ -8,7 +8,7 @@ author:
     - Ziyue Yang
 date: "October 19^th^, 2020"
 output: pdf_document
-abstract: "We investigate the relation"
+abstract: "We investigate the relationship between the annual income and the mental health status of individuals. Based on a General Social Survey collected in 2013, we built and fit a logistic regression model to analyze associations between income and mental health. Throughout the report, we compared different regression models and discusses which ones are the best for fitting the data."
 ---
 
 
@@ -22,25 +22,24 @@ library(brms)
 source('model.R')
 
 # Configuring global figure settings
-knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE, warning = FALSE)
-
+knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
 # Introduction
 
-A topic that intrigues us is the relationship of annual income to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will be the focus of our analyses. Research shows that there has been increasing concern about the impact of the global economic recession on mental health (Sareen J 2011). We will investigate the relationship between the annual income and mental health status alongside with various factors, including gender, marital status, age. Our assumption is that these factors are playing essential roles to bringing effects on one's mental health.
+A topic that has intrigued us is the relationship of annual income to the subjective well-being of individuals. One of the measurements of well-being is reported mental health, which will be the focus of our analyses. Research shows that there has been increasing concern about the impact of the global economic recession on mental health (Sareen J 2011). We will investigate the relationship between the annual income and mental health status alongside with various factors, including gender, marital status, age. Our assumption is that these factors are playing essential roles in bringing effects on one's mental health.
 
-Particularly, we built and fitted a **logistic regression model** (based on Page 154, Wu, Thompson), and carried out a binary dependent variable $Y$ (i.e. a dummy variable having value of either 0 or 1) indicating the samples' mental health status. We estimated coefficients for each feature in order to predict the binary mental health outcome. 
+Particularly, we built and fitted a **logistic regression model** (based on Page 154, Wu, Thompson), and carried out a binary dependent variable $Y$ (i.e. a dummy variable having values of either 0 or 1) indicating the samples' mental health status. We estimated coefficients for each feature in order to predict the binary mental health outcome. 
 
 # Data
 
-Throughout, regression models will be illustrated using data from the twenty fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010. The csv data of selected features is available at https://github.com/yangzi33/sta304-ps3.
+Throughout, regression models will be illustrated using data from the twenty-fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010 (General Social Survey, 2013). The CSV data of selected features is available at https://github.com/yangzi33/sta304-ps3.
 
 The target population for this survey includes all persons 15 years of age and older in Canada, excluding residents of the Yukon, Northwest Territories, and Nunavut, as well as full-time residents of institutions. Computer assisted telephone interviewing was used to collect data for GSS, and households were reached by calling a series of randomly-generated phone numbers.
 
 In the GSS, mental health is assessed by a question asking "In general, would you say your mental health is: ...", with provided answers "Excellent, Very Good, Good, Fair, Poor", or "Don't know" for those who are unsure about answering. Of the total of 15,390 respondents in the survey, 203 did not choose to answer, and 45 answered "Don't know". Therefore, analyses in our report are based on 15,142 respondents providing valid answers to this question. 
 
-Due to the fact that there are merely four values, we treat them as a binary variable, by coding value $1$ for those who answered "Excellent" or "Very Good", and $0$ otherwise. The mean of this binary variable is 0.608 or 7224/11873, the proportion of those who are "mentally healthy" in the sample, denoted $p$, which can be viewed as the probability that a randomly selected sample will be "mentally healthy".
+Since there are merely four values, we treat them as a binary variable, by coding value $1$ for those who answered "Excellent" or "Very Good", and $0$ otherwise. The mean of this binary variable is 0.608 or 7224/11873, the proportion of those who are "mentally healthy" in the sample, denoted $p$, which can be viewed as the probability that a randomly selected sample will be "mentally healthy".
 
 Our focus will be modeling mental health as a function of various variables. Two of the independent variables are treated as interval: age, income, while gender and marital status will be dummies. We will examine the relationship between mental health and marital status. Additionally, since the income groups are grouped by income intervals, which makes it challenging to perform logistic regression. Hence for each sample, we generate a uniformly random number that lies between the income interval of the sample using the `runif()` function.
 
@@ -53,7 +52,7 @@ Our focus will be modeling mental health as a function of various variables. Two
 <!--   - 7788 -->
 <!--   - \$0 to \$49,999, \$50,000 to \$100,000, over \$100,000. -->
 
-The following plots illustrates the distribution of each age group
+The following plots illustrate the distribution of each age group
 
 ```{r, echo=FALSE}
 raw_bar <- ggplot(df, aes(y = mental_health, fill = annual_income)) + geom_bar() + labs(title = "Figure 1. Proportion of Mental Health Status Grouped by Annual Income", fill = "Annual Income", subtitle = "Source: Cleaned Dataset.") + ylab("Mental Health Indicator")
@@ -99,14 +98,14 @@ Then, we perform a linearization on $p$ using a logit transformation defined as
 \log\left( \frac{p}{1-p} \right)=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\dots+\beta_{13}X_{13},
 \end{equation}
 
-based on which we examine the relationship between mental health and income. We fit model using function `glm()`, and estimate the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
+based on which we examine the relationship between mental health and income. We fit the model using function `glm()`, and estimate the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
 
 <!-- Based on $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$, we can predict mental health of a response outcomes by the annual income -->
 
 
 # Results
 
-The following table contains a summary of fitted linearized logistic model:
+The following table contains a summary of the fitted linearized logistic model:
 
 ```{r, echo=FALSE}
 model_summary <- summary(logit_model)
@@ -115,8 +114,8 @@ model_summary
 
 From the table, we have the following estimated coefficients:
 
-- $\hat{\beta_0}=0.5277$,
-- $\hat{\beta_1}=1.123\times10^{-5}$,
+- $\hat{\beta_0}=0.5277$
+- $\hat{\beta_1}=1.123\times10^{-5}$
 - $\hat{\beta_2}=-0.5831$,
 - $\hat{\beta_3}=-0.8403$,
 - $\hat{\beta_4}=-0.8924$,
@@ -130,10 +129,9 @@ From the table, we have the following estimated coefficients:
 - $\hat{\beta_{12}}=0.0353$,
 - $\hat{\beta_{13}}=-0.0527$,
 
-**How do we interpret the coefficients?**
+From the result, if the income of respondents is increased by 1, then the mental health increases on average by $1.123\times 10^{-5}$. If the age of respondents between 25 to 34 is increased by 1, then the mental health decreases on average by $5.831\times 10^{-1}$; when the age of respondents between 35 to 44 is increased by 1, the mental health decreases on average by $-8.403\times 10^{-1}$, similarly. The drop in mental health peaked on age between 45 to 54, meaning when the age of respondents between 45 to 54 is increased by 1, the mental health decreases on average by $8.924 \times 10^{-1}$. Marriage status has a general increase in the mental health, but separated in marriage will result in a decrease of $-2.393\times 10^{-1}$ mental health on average.
 
-
-# Discussion (.)
+# Discussion
 
 ## Why Logistic Model over Linear Model?
 
@@ -146,51 +144,39 @@ p=\beta_0+\beta_1X_1+\beta_2X_2+\dots+\beta_{13}X_{13},
 
 (residuals are omitted here, as we are referring to the expected value.)
 
-Nonetheless, the problems occurred has already been discussed in the lecture, as fitting a linear model to the following  will have resulting residuals not identically distributed.
-
 ```{r, echo=FALSE}
 raw_scatter <- ggplot(df, aes(y = mental_dummy, x = uniform_income)) + geom_point() + xlab("Annual Income ($)") + ylab("Mental Health Status") + labs(title = "Figure 2. Linear Model on Mental Health Status versus Annual Income") + stat_smooth(method = "lm", col = "red")
 raw_scatter
 ```
 
-Suppose we use a linear model over a logistic model. The variance of models
+Nonetheless, the problems occurred has already been discussed in the lecture, as fitting a linear model to the following will have resulting residuals that have non-constant variance across the combinations of predictor values. Furthermore, we may choose numerical variables, such that there will be more association in the data.
+
 
 ## Weaknesses and Potential Improvements
 
-One of the major weaknesses in our model is that we do not know the specific amount of annual income of samples, but merely the range, which makes the feature `annual income` categorical, making it difficult to fit a regression model. We managed to avoid the problem by generating a random value that lies between the income interval for each sample; nonetheless, 
+One of the major weaknesses in our model is that we do not know the specific amount of annual income of samples, but merely the range, which makes the feature `annual income` categorical, making it difficult to fit a regression model. We managed to avoid the problem by generating a random value that lies between the income interval for each sample, which, however, may cause false estimations as we did not generate random values for annual income more than 100,000, due to the fact that the income range *more than 100,000* approaches infinity. For instance, suppose Jeff Bezos has participated the survey, then our prediction would be inaccurate.
 
-# References (.)
-
-
-<!-- For brms -->
-<!-- ######## -->
-
-* General Social Survey (GSS) on Family (cycle 31) (2017).
+# References
 
 * Bürkner P. C. (2017). brms: An R Package for Bayesian Multilevel Models using Stan. Journal of Statistical Software. 80(1), 1-28. doi.org/10.18637/jss.v080.i01
 
 * Bürkner P. C. (2018). Advanced Bayesian Multilevel Modeling with the R Package brms. The R Journal. 10(1), 395-411. doi.org/10.32614/RJ-2018-017
 
-<!-- ######## -->
-
-<!-- For Stan -->
-<!-- ######## -->
-
 * Carpenter B., Gelman A., Hoffman M. D., Lee D., Goodrich B., Betancourt M., Brubaker M., Guo J., Li P., and Riddell A. (2017). Stan: A probabilistic programming language. Journal of Statistical Software. 76(1). 10.18637/jss.v076.i01
 
-<!-- ######## -->
+* General Social Survey (GSS) on Family (cycle 31) (2017).
+
+* H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
 
 * R Core Team (2020). R: A language and environment for statistical computing. R Foundation for Statistical
   Computing, Vienna, Austria. URL https://www.R-project.org/.
   
-* Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
-  https://doi.org/10.21105/joss.01686
 
 * Sam Firke (2020). janitor: Simple Tools for Examining and Cleaning Dirty Data. R package version 2.0.1.
   https://CRAN.R-project.org/package=janitor
 
 * Sareen J, Afifi TO, McMillan KA, Asmundson GJG. Relationship Between Household Income and Mental Disorders: Findings   From a Population-Based Longitudinal Study. Arch Gen Psychiatry. 2011;68(4):419–427. doi:10.1001/archgenpsychiatry.2011.15
 
-* H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
 
-# Appendix (. Optional)
+* Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686,
+  https://doi.org/10.21105/joss.01686
