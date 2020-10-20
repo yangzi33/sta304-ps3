@@ -1,0 +1,2453 @@
+*******************************************************************
+*  Stata "do-file" file with labels and missing data specifications
+*  Created by ddltox on Oct 17, 2020  (Sat 05:55 PM EDT)
+*  DDL source file: "/web/sda.artsci.utoronto.ca/htdocs/sdaweb/tmpdir/AA2JOr5f.txt".
+*
+*  Note that the data dictionary is given at the end of this file.
+*  Put the dictionary into a separate file (by editing this file).
+*  Then specify below the name of the dictionary file.
+*
+*  DDL file gives the following dataset description:
+*    Records per case: 1
+*    Record length:    19585
+*******************************************************************
+
+
+label data "General Social Survey, Time-Stress and Well Being - Version 5"
+
+#delimit ;
+label define agegr5    1 "15 to 17" 2 "18 to 19" 3 "20 to 24" 4 "25 to 29" 
+                       5 "30 to 34" 6 "35 to 39" 7 "40 to 44" 8 "45 to 49" 
+                       9 "50 to 54" 10 "55 to 59" 11 "60 to 64" 12 "65 to 69" 
+                       13 "70 to 74" 14 "75 to 79" 15 "80 years and over" ;
+label define agegr10   1 "15 to 24" 2 "25 to 34" 3 "35 to 44" 4 "45 to 54" 
+                       5 "55 to 64" 6 "65 to 74" 7 "75 years and over" ;
+label define sex       1 "Male" 2 "Female" ;
+label define marstat   1 "Married" 2 "Living common-law" 3 "Widowed" 
+                       4 "Separated" 5 "Divorced" 6 "Single (Never married)" 
+                       8 "Not stated" 9 "Don't know" ;
+label define ageprgrdif 1 "Respondent is 11 + years older" 
+                       2 "Respondent is 6 to 10 years older" 
+                       3 "Respondent is 5 years older" 
+                       4 "Respondent is 4 years older" 
+                       5 "Respondent is 3 years older" 
+                       6 "Respondent is 2 years older" 
+                       7 "Respondent is 1 year older" 
+                       8 "Respondent and spouse/partner are same age" 
+                       9 "Respondent is 1 year younger" 
+                       10 "Respondent is 2 years younger" 
+                       11 "Respondent is 3 years younger" 
+                       12 "Respondent is 4 years younger" 
+                       13 "Respondent is 5 years younger" 
+                       14 "Respondent is 6 to 10 years younger" 
+                       15 "Respondent is 11 + years younger" 
+                       97 "No spouse/partner in household" 98 "Not stated" 
+                       99 "Don't know" ;
+label define sexpr     0 "Respondent has no partner in the household" 
+                       1 "Respondent has a male partner in the household" 
+                       2 "Respondent has a female partner in the household" ;
+label define prtypec   0 "Respondent has no spouse/partner in the household" 
+                       1 "Respondent has an opposite sex married spouse in the househo" 
+                       2 "Respondent has an opposite sex common-law partner in the hou" 
+                       3 "Respondent has a same sex spouse/partner in the household" ;
+label define agechryc  25 "25 and over" 
+                       97 "Not asked - no children in the household" 
+                       98 "Not stated" ;
+label define agehsdyc  80 "80 and over" 98 "Not stated" ;
+label define chrflag   1 "Yes" 2 "No" ;
+label define chrinhsdc 0 "None" 1 "One" 2 "Two" 3 "Three" 
+                       4 "Four or more children" ;
+label define chr0014c  0 "None" 1 "One" 2 "Two" 3 "Three or more children" ;
+label define chrtime6  1 "No child under 19 years of age at home" 
+                       2 "All children under 5 years of age" 
+                       3 "All children between 5 and 12 years of age" 
+                       4 "All children 13 years of age or older" 
+                       5 "At least one child under 5 years of age, but not all childre" 
+                       6 "Other" ;
+label define chh0512c  0 "None" 1 "One" 2 "Two" 3 "Three or more children" ;
+label define chh0014c  0 "None" 1 "One" 2 "Two" 3 "Three or more children" ;
+label define parhsdc   1 "Two biological parents" 
+                       2 "Two parents (biological/adoptive/step)" 
+                       3 "Only one parent" 
+                       7 "Not asked - no parents in the household" ;
+label define livarr08  1 "Under 25 years of age not living with parents" 
+                       2 "Under 25 years of age living with both parents" 
+                       3 "Under 25 years of age living with mother only" 
+                       4 "Under 25 years of age living with father only" 
+                       5 "25 years of age or older not living with parents" 
+                       6 "25 years of age or older living with both parents" 
+                       7 "25 years of age or older living with mother only" 
+                       8 "25 years of age or older living with father only" ;
+label define livarr12  1 "Alone" 2 "Spouse only" 
+                       3 "Spouse and single child < 25 years of age" 
+                       4 "Spouse and single child 25 years of age or older" 
+                       5 "Spouse and non-single child(ren)" 
+                       6 "Spouse and other" 
+                       7 "No spouse and single child < 25 years of age" 
+                       8 "No spouse and single child 25 years of age or older" 
+                       9 "No spouse and non-single child(ren)" 
+                       10 "Living with 2 parents" 11 "Living with 1 parent" 
+                       12 "Other living arrangement" ;
+label define hsdsizec  1 "One household member" 2 "Two household members" 
+                       3 "Three household members" 4 "Four household members" 
+                       5 "Five household members" 
+                       6 "Six household members or more" ;
+label define hsdeligc  1 "One household member" 2 "Two household members" 
+                       3 "Three household members" 4 "Four household members" 
+                       5 "Five household members or more" ;
+label define famtype   1 "Couple only" 2 "Intact family" 
+                       3 "Step-family with common child" 
+                       4 "Step-family without a common child" 
+                       5 "Lone parent family" 
+                       7 "No spouse/partner or children in household" ;
+label define multigen  1 "Yes" 2 "No" 6 "Number of generations unknown" ;
+label define mar_q100  1 "Working at a paid job or business" 
+                       2 "Vacation (from paid work)" 
+                       3 "Looking for paid work" 4 "Going to school" 
+                       5 "Caring for children" 6 "Household work" 7 "Retired" 
+                       8 "Maternity/paternity leave" 9 "Long term illness" 
+                       10 "Volunteering or care-giving other than for children" 
+                       11 "Other" 98 "Not stated" 99 "Don't know" ;
+label define act7days  
+                       1 "Working at a paid job or business(includes vacation from pai" 
+                       2 "Looking for paid work" 3 "Going to school" 
+                       4 "Household work /caring for child" 5 "Retired" 
+                       6 "Other (includes Maternity/paternity leave, long-term illness" 
+                       8 "Not stated" 9 "Don't know" ;
+label define mar_q105  1 "Full-time" 2 "Part-time" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define mar_q133  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define wkltwe    1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define mar_q134  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q135  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q136  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define age_lstpdwk_c 65 "65 years and over" 95 "Never worked" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define wkwe      97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define mar_q171  997 "Not asked" 998 "Not stated" 999 "Don't know" ;
+label define mar_q172  1 "...a paid worker?" 2 "...self-employed?" 
+                       3 "...an unpaid family worker?" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define mar_q174_c 50 "50 employees or more" 97 "Not asked" 
+                       98 "Not stated" 99 "Don't know" ;
+label define mar_q175  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q190  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define wkwehohr_c 75 "75 or more hours" 97 "Not asked" 98 "Not stated" 
+                       99 "Don't know" ;
+label define mar_q193  1 "Care for children" 
+                       2 "Care for other family members" 
+                       3 "Other personal or family responsibilities" 
+                       4 "Requirements of the job, no choice" 
+                       5 "Home is usual place of work" 
+                       6 "Better conditions of work" 7 "Saves time, money" 
+                       8 "Live too far from work to commute" 9 "Other" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define naics2007_c16 1 "Agriculture" 
+                       2 "Forestry, fishing, mining, oil and gas" 
+                       3 "Utilities" 4 "Construction" 5 "Manufacturing" 
+                       6 "Trade" 7 "Transportation and warehousing" 
+                       8 "Finance, insurance, real estate and leasing" 
+                       9 "Professional, scientific and technical services" 
+                       10 "Management, administrative and other support" 
+                       11 "Educational services" 
+                       12 "Health care and social assistance" 
+                       13 "Information, culture and recreation" 
+                       14 "Accommodation and food services" 
+                       15 "Other services" 16 "Public administration" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define nocs2006_c10 1 "Management occupations" 
+                       2 "Business, finance and administrative occupations" 
+                       3 "Natural and applied sciences and related occupations" 
+                       4 "Health occupations" 
+                       5 "Occupations in social science, education, government service" 
+                       6 "Occupations in art, culture, recreation and sport" 
+                       7 "Sales and services occupations" 
+                       8 "Trades, transport and equipment operators and related occupa" 
+                       9 "Occupations unique to primary industry" 
+                       10 "Occupations unique to processing, manufacturing and utilitie" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define mar_q315  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define naics2007_lwk_c16 1 "Agriculture" 
+                       2 "Forestry, fishing, mining, oil and gas" 
+                       3 "Utilities" 4 "Construction" 5 "Manufacturing" 
+                       6 "Trade" 7 "Transportation and warehousing" 
+                       8 "Finance, insurance, real estate and leasing" 
+                       9 "Professional, scientific and technical services" 
+                       10 "Management, administrative and other support" 
+                       11 "Educational services" 
+                       12 "Health care and social assistance" 
+                       13 "Information, culture and recreation" 
+                       14 "Accommodation and food services" 
+                       15 "Other services" 16 "Public administration" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define nocs2006_lwk_c10 1 "Management occupations" 
+                       2 "Business, finance and administrative occupations" 
+                       3 "Natural and applied sciences and related occupations" 
+                       4 "Health occupations" 
+                       5 "Occupations in social science, education, government service" 
+                       6 "Occupations in art, culture, recreation and sport" 
+                       7 "Sales and services occupations" 
+                       8 "Trades, transport and equipment operators and related occupa" 
+                       9 "Occupations unique to primary industry" 
+                       10 "Occupations unique to processing, manufacturing and utilitie" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define mar_q350  
+                       1 "... regular employee (no contractual or anticipated terminat" 
+                       2 "... seasonal employee (employment on this job is intermitten" 
+                       3 "... term employee (term of employment has a set termination" 
+                       4 "... casual or on-call employee?" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define mar_q364  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q370_c 0 "Less than 1 kilometre" 
+                       100 "100 kilometres and more" 
+                       995 "Respondent works at home" 997 "Not asked" 
+                       998 "Not stated" 999 "Don't know" ;
+label define mar_q381  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lfsgss    1 "Full-time (30 or more hours per week)" 
+                       2 "Part-time (less than 30 hours per week)" 
+                       3 "Student with full-time or part-time employment" 
+                       4 "Student only, no employment" 
+                       5 "No hours of regular employment" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lfshsd12  
+                       1 "Resp. - Full-time empl., Spouse/partner - Full-time empl." 
+                       2 "Resp. - Full-time empl., Spouse/partner - Part-time empl." 
+                       3 "Resp. - Full-time empl., Spouse/partner - Not empl." 
+                       4 "Resp. - Part-time empl., Spouse/partner - Full-time empl." 
+                       5 "Resp. - Part-time empl., Spouse/partner - Part-time empl." 
+                       6 "Resp. - Part-time empl., Spouse/partner - Not empl." 
+                       7 "Resp. - Not empl., Spouse/partner - Full-time empl." 
+                       8 "Resp. - Not empl., Spouse/partner - Part-time empl." 
+                       9 "Resp. - Not empl., Spouse/partner - Not empl." 
+                       10 "Resp. - Full-time empl., No Spouse/partner in household" 
+                       11 "Resp. - Part-time empl., No Spouse/partner in household" 
+                       12 "Resp. - Not empl., No Spouse/partner in household" 
+                       98 "Not stated" ;
+label define wkwehr_c  75.0 "75 or more hours" 99.7 "Not asked" 
+                       99.8 "Not stated" 99.9 "Don't know" ;
+label define mar_q388_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c06 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c07 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c08 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c09 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q388_c10 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q390  97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define mar_q410  1 "... a regular daytime schedule or shift?" 
+                       2 "... a regular evening shift?" 
+                       3 "... a regular night shift?" 
+                       4 "... a rotating shift?" 5 "... a split shift?" 
+                       6 "... a compressed work week?" 
+                       7 "... on call or casual?" 
+                       8 "... an irregular schedule?" 9 "Other" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define mar_q420  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q510  1 "... very satisfied?" 2 "... satisfied?" 
+                       3 "... neither satisfied nor dissatisfied?" 
+                       4 "... dissatisfied?" 5 "... very dissatisfied?" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define mar_q520_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c06 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c07 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q520_c08 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q522  1 "... all of the time?" 2 "... most of the time?" 
+                       3 "... sometimes?" 4 "... never?" 5 "Not applicable" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define mar_q523  1 "... all of the time?" 2 "... most of the time?" 
+                       3 "... sometimes?" 4 "... never?" 5 "Not applicable" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define mar_q530_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q530_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q530_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q530_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q530_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mar_q530_c06 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define acmyr     1 "Working at a paid job or business" 
+                       2 "Looking for paid work" 3 "Going to school" 
+                       4 "Caring for children" 5 "Household work" 6 "Retired" 
+                       7 "Maternity/paternity leave" 8 "Long term illness" 
+                       9 "Volunteering or care-giving other than for children" 
+                       10 "Other" 98 "Not stated" 99 "Don't know" ;
+label define mar_q550  1 "Full-time" 2 "Part-time" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define eduyr     0 "No schooling" 1 "One to five years" 6 "Six" 
+                       7 "Seven" 8 "Eight" 9 "Nine" 10 "Ten" 11 "Eleven" 
+                       12 "Twelve" 13 "Thirteen" 98 "Not stated" 
+                       99 "Don't know" ;
+label define eor_q110  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define eor_q150  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define edu5      1 "Doctorate/masters/bachelor's degree" 
+                       2 "Diploma/certificate from community college or trade/technica" 
+                       3 "Some university/community college" 
+                       4 "High school diploma" 
+                       5 "Some secondary/elementary/no schooling" 
+                       8 "Not stated" 9 "Don't know" ;
+label define edu10     1 "Doctorate/masters/some graduate" 
+                       2 "Bachelor's degree" 
+                       3 "Diploma/certificate from community college" 
+                       4 "Diploma/certificate from trade/technical" 
+                       5 "Some university" 
+                       6 "Some community college/CEGEP/nursing" 
+                       7 "Some trade/technical" 8 "High school diploma" 
+                       9 "Some secondary/high school" 
+                       10 "Elementary school/no schooling" 98 "Not stated" 
+                       99 "Don't know" ;
+label define eor_q210  1 "Canada" 2 "Country outside Canada" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define eor_q320  9995 "Respondent is still attending school" 
+                       9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define map_q100  1 "Working at a paid job or business" 
+                       2 "Vacation (from paid work)" 
+                       3 "Looking for paid work" 4 "Going to school" 
+                       5 "Caring for children" 6 "Household work" 7 "Retired" 
+                       8 "Maternity/paternity leave" 9 "Long term illness" 
+                       10 "Volunteering or care-giving other than for children" 
+                       11 "Other" 97 "Not asked" 98 "Not stated" 
+                       99 "Don't know" ;
+label define act7days_pr 
+                       1 "Working at a paid job or business(includes vacation from pai" 
+                       2 "Looking for paid work" 3 "Going to school" 
+                       4 "Household work /caring for child" 5 "Retired" 
+                       6 "Other (includes Maternity/paternity leave and long-term illn" 
+                       7 "Volunteering or care-giving other than for children" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define map_q120  1 "Full-time" 2 "Part-time" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define wkwepr    1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define map_q130  1 "... a paid worker?" 2 "... self-employed?" 
+                       3 "... an unpaid family worker?" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define wkwehrpr_c 75.0 "75 or more hours" 99.7 "Not asked" 
+                       99.8 "Not stated" 99.9 "Don't know" ;
+label define map_q155  1 "... a regular daytime schedule or shift?" 
+                       2 "... a regular evening shift?" 
+                       3 "... a regular night shift?" 
+                       4 "... a rotating shift? (one that changes periodically from da" 
+                       5 "... a split shift? (one consisting of two or more distinct p" 
+                       6 "... a compressed work week?" 
+                       7 "... on call or casual?" 
+                       8 "... an irregular schedule?" 9 "... Other" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define map_q160  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define map_q180  9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define map_q181  9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define map_q180_q181_hrs 99.7 "Not asked" 99.8 "Not stated" 99.9 "Don't know" ;
+label define map_q190  9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define map_q191  9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define map_q190_q191_hrs 99.7 "Not asked" 99.8 "Not stated" 99.9 "Don't know" ;
+label define map_q180_q191_tothrs 99.7 "Not asked" 99.8 "Not stated" 99.9 "Don't know" ;
+label define map_q210  0 "None" 1 "Less than 5 hours" 2 "5 to 14 hours" 
+                       3 "15 to 29 hours" 4 "30 to 59 hours" 
+                       5 "60 hours or more" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define map_q220  0 "None" 1 "Less than 5 hours" 2 "5 to 14 hours" 
+                       3 "15 to 29 hours" 4 "30 to 59 hours" 
+                       5 "60 hours or more" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define map_q235  0 "None" 1 "Less than 5 hours" 2 "5 to 14 hours" 
+                       3 "15 to 29 hours" 4 "30 to 59 hours" 
+                       5 "60 hours or more" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define map_q245  0 "None" 1 "Less than 5 hours" 2 "5 to 9 hours" 
+                       3 "10 to 19 hours" 4 "20 hours or more" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define map_q250  0 "None" 1 "Less than 5 hours" 2 "5 to 14 hours" 
+                       3 "15 to 29 hours" 4 "30 to 59 hours" 
+                       5 "60 hours or more" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define edupr5    1 "Doctorate/masters/bachelor's degree" 
+                       2 "Diploma/certificate from community college or trade/technica" 
+                       3 "Some university/community college" 
+                       4 "High school diploma" 
+                       5 "Some secondary/elementary/no schooling" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define edupr10   1 "Doctorate/masters/some graduate" 
+                       2 "Bachelor's degree" 
+                       3 "Diploma/certificate from community college" 
+                       4 "Diploma/certificate from trade/technical" 
+                       5 "Some university" 
+                       6 "Some community college/CEGEP/nursing" 
+                       7 "Some trade/technical" 8 "High school diploma" 
+                       9 "Some secondary/high school" 
+                       10 "Elementary school/no schooling" 97 "Not asked" 
+                       98 "Not stated" 99 "Don't know" ;
+label define eop_q210  97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define edum5     1 "Doctorate/masters/bachelor's degree" 
+                       2 "Diploma/certificate from community college or trade/technica" 
+                       3 "Some university/community college" 
+                       4 "High school diploma" 
+                       5 "Some secondary/elementary/no schooling" 
+                       8 "Not stated" 9 "Don't know" ;
+label define edum10    1 "Doctorate/masters/some graduate" 
+                       2 "Bachelor's degree" 
+                       3 "Diploma/certificate from community college" 
+                       4 "Diploma/certificate from trade/technical" 
+                       5 "Some university" 
+                       6 "Some community college/CEGEP/nursing" 
+                       7 "Some trade/technical" 8 "High school diploma" 
+                       9 "Some secondary/high school" 
+                       10 "Elementary school/no schooling" 98 "Not stated" 
+                       99 "Don't know" ;
+label define eom_q210  97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define eduf5     1 "Doctorate/masters/bachelor's degree" 
+                       2 "Diploma/certificate from community college or trade/technica" 
+                       3 "Some university/community college" 
+                       4 "High school diploma" 
+                       5 "Some secondary/elementary/no schooling" 
+                       8 "Not stated" 9 "Don't know" ;
+label define eduf10    1 "Doctorate/masters/some graduate" 
+                       2 "Bachelor's degree" 
+                       3 "Diploma/certificate from community college" 
+                       4 "Diploma/certificate from trade/technical" 
+                       5 "Some university" 
+                       6 "Some community college/CEGEP/nursing" 
+                       7 "Some trade/technical" 8 "High school diploma" 
+                       9 "Some secondary/high school" 
+                       10 "Elementary school/no schooling" 98 "Not stated" 
+                       99 "Don't know" ;
+label define eof_q210  97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define dwelc     1 "Single detached house" 
+                       2 "Low-rise apartment (< 5 stories)" 
+                       3 "High-rise apartment (5 + stories)" 4 "Other" 
+                       8 "Not stated" 9 "Don't know" ;
+label define dwellown  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define live_dwelling 1 "Less than 6 months" 
+                       2 "6 months to less than 1 year" 
+                       3 "1 year to less than 3 years" 
+                       4 "3 years to less than 5 years" 
+                       5 "5 years to less than 10 years" 
+                       6 "10 years and over" 8 "Not stated" 9 "Don't know" ;
+label define live_neigh 1 "Less than 6 months" 
+                       2 "6 months to less than 1 year" 
+                       3 "1 year to less than 3 years" 
+                       4 "3 years to less than 5 years" 
+                       5 "5 years to less than 10 years" 
+                       6 "10 years and over" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define live_local 1 "Less than 6 months" 
+                       2 "6 months to less than 1 year" 
+                       3 "1 year to less than 3 years" 
+                       4 "3 years to less than 5 years" 
+                       5 "5 years to less than 10 years" 
+                       6 "10 years and over" 8 "Not stated" 9 "Don't know" ;
+label define dor_q222  1 "Most of the people in your neighbourhood" 
+                       2 "Many of the people in your neighbourhood" 
+                       3 "A few of the people in your neighbourhood" 
+                       4 "None of the people in your neighbourhood" 
+                       8 "Not stated" 9 "Don't know" ;
+label define dor_q227  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define dor_q228  1 "Yes" 2 "No" 3 "Just moved into the area" 
+                       8 "Not stated" 9 "Don't know" ;
+label define dor_q229  1 "Yes" 2 "No" 3 "Just moved into the area" 
+                       8 "Not stated" 9 "Don't know" ;
+label define brthcan   1 "Canada" 2 "Country outside Canada" 8 "Not stated" 
+                       9 "Don't know" ;
+label define brthprvc  1 "Newfoundland and Labrador" 2 "Prince Edward Island" 
+                       3 "Nova Scotia" 4 "New Brunswick" 5 "Quebec" 
+                       6 "Ontario" 7 "Manitoba" 8 "Saskatchewan" 9 "Alberta" 
+                       10 "British Columbia" 
+                       11 "Yukon/Northwest Territories/Nunavut" 
+                       12 "Countries outside Canada" 98 "Not stated" 
+                       99 "Don't know" ;
+label define brthregc  
+                       1 "Born in Canada - province of birth = province of residence" 
+                       2 "Born in Canada - province of birth not equal to province of" 
+                       3 "Born in Canada - Province/Territory not sated" 
+                       4 "Born outside Canada - North America (excludes Canada, includ" 
+                       5 "Born outside Canada - South/Central America, Caribbean, Afri" 
+                       6 "Born outside Canada - country uncodeable" 
+                       7 "Not stated/Don't know which country respondent was born" 
+                       98 "Born outside Canada - Not stated" 
+                       99 "Born outside Canada - Don't know" ;
+label define yrarri    1 "Before 1946" 2 "1946 to 1959" 3 "1960 to 1964" 
+                       4 "1965 to 1969" 5 "1970 to 1974" 6 "1975 to 1979" 
+                       7 "1980 to 1984" 8 "1985 to 1989" 9 "1990 to 1994" 
+                       10 "1995 to 1999" 11 "2000 to 2004" 12 "2005 to 2010" 
+                       97 "Not asked - Born in Canada/Canadian citizen by birth" 
+                       98 "Not stated" 99 "Don't know" ;
+label define agearrigrc 1 "0 to 4" 2 "5 to 9" 3 "10 to 14" 4 "15 to 19" 
+                       5 "20 to 24" 6 "25 to 29" 7 "30 to 34" 8 "35 to 39" 
+                       9 "40 to 44" 10 "45 to 49" 11 "50 years and over" 
+                       97 "Not asked - Born in Canada/Canadian citizen by birth" 
+                       98 "Not stated" 99 "Don't know" ;
+label define bpr_q50   1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define yrlndimm  1 "Before 1946" 2 "1946 to 1955" 3 "1956 to 1960" 
+                       4 "1961 to 1965" 5 "1966 to 1970" 6 "1971 to 1975" 
+                       7 "1976 to 1980" 8 "1981 to 1985" 9 "1986 to 1990" 
+                       10 "1991 to 1995" 11 "1996 to 2000" 12 "2001 to 2005" 
+                       13 "2006 to 2010" 
+                       97 "Not asked - Canadian citizen by birth/non-permanent resident" 
+                       98 "Not stated" 99 "Don't know" ;
+label define agelndimmgrc 1 "0 to 4" 2 "5 to 9" 3 "10 to 14" 4 "15 to 19" 
+                       5 "20 to 24" 6 "25 to 29" 7 "30 to 34" 8 "35 to 39" 
+                       9 "40 to 44" 10 "45 to 49" 11 "50 years and over" 
+                       97 "Not asked" 98 "Not stated" 99 "Don't know" ;
+label define brthpcan  1 "Canada" 2 "Country outside Canada" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define brthpprvc 1 "Newfoundland and Labrador" 2 "Prince Edward Island" 
+                       3 "Nova Scotia" 4 "New Brunswick" 5 "Quebec" 
+                       6 "Ontario" 7 "Manitoba" 8 "Saskatchewan" 9 "Alberta" 
+                       10 "British Columbia" 
+                       11 "Yukon/Northwest Territories/Nunavut" 
+                       12 "Countries outside Canada" 97 "Not asked" 
+                       98 "Not stated" 99 "Don't know" ;
+label define brthpregc 1 "Born in Canada" 
+                       2 "Born outside Canada - North America/Europe" 
+                       3 "Born outside Canada - Other countries" 
+                       4 "Not stated/Don't know which country respondent's spouse/part" 
+                       5 "Born outside Canada - South/Central America, Caribbean, Afri" 
+                       7 "Not stated/Don't know which country respondent's spouse/part" 
+                       97 "Not asked" 98 "Born outside Canada - Not stated" 
+                       99 "Born outside Canada - Don't know" ;
+label define brthmcan  1 "Canada" 2 "Country outside Canada" 8 "Not stated" 
+                       9 "Don't know" ;
+label define brthmprvc 1 "Newfoundland and Labrador" 2 "Prince Edward Island" 
+                       3 "Nova Scotia" 4 "New Brunswick" 5 "Quebec" 
+                       6 "Ontario" 7 "Manitoba" 8 "Saskatchewan" 9 "Alberta" 
+                       10 "British Columbia" 
+                       11 "Yukon/Northwest Territories/Nunavut" 
+                       12 "Countries outside of Canada" 98 "Not stated" 
+                       99 "Don't know" ;
+label define brthmregc 
+                       1 "Born in Canada - province of birth = respondent's province o" 
+                       2 "Born in Canada - province of birth not equal to respondent's" 
+                       3 "Born in Canada - province/territory Not sated" 
+                       4 "Born outside Canada - North America (excludes Canada, includ" 
+                       5 "Born outside Canada - South/Central America, Caribbean, Afri" 
+                       6 "Born outside Canada - country uncodeable" 
+                       7 "Not stated/Don't know which country respondent's mother was" 
+                       98 "Born outside Canada - Not stated" 
+                       99 "Born outside Canada - Don't know" ;
+label define brthfcan  1 "Canada" 2 "Country outside Canada" 8 "Not stated" 
+                       9 "Don't know" ;
+label define brthfprvc 1 "Newfoundland and Labrador" 2 "Prince Edward Island" 
+                       3 "Nova Scotia" 4 "New Brunswick" 5 "Quebec" 
+                       6 "Ontario" 7 "Manitoba" 8 "Saskatchewan" 9 "Alberta" 
+                       10 "British Columbia" 
+                       11 "Yukon/Northwest Territories/Nunavut" 
+                       12 "Countries outside of Canada" 98 "Not stated" 
+                       99 "Don't know" ;
+label define brthfregc 
+                       1 "Born in Canada - province of birth = respondent's province o" 
+                       2 "Born in Canada - province of birth not = respondent's provin" 
+                       3 "Born in Canada - province/territory Not sated" 
+                       4 "Born outside Canada - North America (excludes Canada, includ" 
+                       5 "Born outside Canada - South/Central America, Caribbean, Afri" 
+                       6 "Born outside Canada - country uncodeable" 
+                       7 "Not stated/Don't know which country respondent's father was" 
+                       98 "Born outside Canada - Not stated" 
+                       99 "Born outside Canada - Don't know" ;
+label define air_q110  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define aip_q110  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define vismin    1 "Visible minority" 2 "Not a visible minority" 
+                       8 "Not stated" 9 "Don't know" ;
+label define visminpr  1 "Visible minority" 2 "Not a visible minority" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define religatt  1 "At least once a week" 2 "At least once a month" 
+                       3 "A few times a year" 4 "At least once a year" 
+                       5 "Not at all" 8 "Not stated" 9 "Don't know" ;
+label define rlr_q110  1 "...very important?" 2 "...somewhat important?" 
+                       3 "...not very important?" 
+                       4 "...not at all important?" 8 "Not stated" 
+                       9 "Don't know" ;
+label define rlr_q120  1 "At least once a week?" 2 "At least once a month?" 
+                       3 "A few times a year?" 4 "At least once a year?" 
+                       5 "Not at all?" 8 "Not stated" 9 "Don't know" ;
+label define relig6    1 "No religion" 2 "Roman Catholic" 3 "United Church" 
+                       4 "Protestant" 5 "Other" 
+                       6 "Para-religious groups or unknown" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lanch     1 "English only" 2 "French only" 
+                       3 "Other language only" 4 "English and French equally" 
+                       5 "English and Other equally" 
+                       6 "French and Other equally" 
+                       7 "English, French and Other equally" 98 "Not stated" 
+                       99 "Don't know" ;
+label define lanchsue  1 "Yes, English still understood" 2 "No" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lanchsuf  1 "Yes, French still understood" 2 "No" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lanchsuo  1 "Yes, Other language still understood" 2 "No" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define lanhsdc   1 "English only" 2 "French only" 3 "Other language" 
+                       8 "Not stated" 9 "Don't know" ;
+label define inr_q025  0 "No income" 
+                       1 "Employment including wages, salaries, commissions and tips" 
+                       2 "Self-employment such as unincorporated business, professiona" 
+                       3 "Investment income (dividends, interest or net rents from rea" 
+                       4 "RRSPs or RRIFs (registered retirement income funds)" 
+                       5 "Employment insurance (or Quebec Parental Insurance Plan)" 
+                       6 "Worker's compensation" 
+                       7 "Benefits from Canada or Quebec Pension Plan" 
+                       8 "Retirement pensions, superannuation and annuities" 
+                       9 "Basic Old Age Security" 
+                       10 "Guaranteed Income Supplement or Survivor's Allowance (from f" 
+                       11 "Child Tax Benefit or family allowances" 
+                       12 "Provincial, Territorial or Municipal social assistance or we" 
+                       13 "Child Support/Alimony" 14 "Other income" 
+                       98 "Not stated" 99 "Don't know" ;
+label define incm      1 "No income" 2 "Less than $5,000" 
+                       3 "$5,000 to $9,999" 4 "$10,000 to $14,999" 
+                       5 "$15,000 to $19,999" 6 "$20,000 to $29,999" 
+                       7 "$30,000 to $39,999" 8 "$40,000 to $49,999" 
+                       9 "$50,000 to $59,999" 10 "$60,000 to $79,999" 
+                       11 "$80,000 to $99,999" 12 "$100,000 or more" 
+                       98 "Not stated" 99 "Don't know" ;
+label define incmmemc  0 "No other member" 1 "One member" 2 "Two members" 
+                       3 "Three members or more" 8 "Not stated" 
+                       9 "Don't know" ;
+label define incmhsd   1 "No income or loss" 2 "Less than $5,000" 
+                       3 "$5,000 to $9,999" 4 "$10,000 to $14,999" 
+                       5 "$15,000 to $19,999" 6 "$20,000 to $29,999" 
+                       7 "$30,000 to $39,999" 8 "$40,000 to $49,999" 
+                       9 "$50,000 to $59,999" 10 "$60,000 to $79,999" 
+                       11 "$80,000 to $99,999" 12 "$100,000 to $149,999" 
+                       13 "$150,000 or more" 98 "Not stated" 99 "Don't know" ;
+label define prv       10 "Newfoundland and Labrador" 
+                       11 "Prince Edward Island" 12 "Nova Scotia" 
+                       13 "New Brunswick" 24 "Quebec" 35 "Ontario" 
+                       46 "Manitoba" 47 "Saskatchewan" 48 "Alberta" 
+                       59 "British Columbia" ;
+label define region    1 "Atlantic region" 2 "Quebec" 3 "Ontario" 
+                       4 "Prairie region" 5 "British Columbia" ;
+label define luc_rst   1 "Larger urban population centres (CMA/CA)" 
+                       2 "Rural areas and small population centres (non-CMA/CA)" 
+                       3 "Prince Edward Island" ;
+label define gtu_q110  1 "... every day?" 2 "... a few times a week?" 
+                       3 "... about once a week?" 4 "... about once a month?" 
+                       5 "... less than once a month?" 6 "... never" 
+                       8 "Not stated" 9 "Don't know" ;
+label define gtu_q130  1 "... every day?" 2 "... a few times a week?" 
+                       3 "... about once a week?" 4 "... about once a month?" 
+                       5 "... less than once a month?" 6 "... never" 
+                       8 "Not stated" 9 "Don't know" ;
+label define dvtday    1 "Weekday" 2 "Saturday" 3 "Sunday" ;
+label define dur0020   0 "No time spent doing this activity" ;
+label define dur0110   0 "No time spent doing this activity" ;
+label define dur0120   0 "No time spent doing this activity" ;
+label define dur0210   0 "No time spent doing this activity" ;
+label define dur0220   0 "No time spent doing this activity" ;
+label define dur0230   0 "No time spent doing this activity" ;
+label define dur0300   0 "No time spent doing this activity" ;
+label define dur0400   0 "No time spent doing this activity" ;
+label define dur0500   0 "No time spent doing this activity" ;
+label define dur0600   0 "No time spent doing this activity" ;
+label define dur0700   0 "No time spent doing this activity" ;
+label define dur0801   0 "No time spent doing this activity" ;
+label define dur0802   0 "No time spent doing this activity" ;
+label define dur0803   0 "No time spent doing this activity" ;
+label define dur0809   0 "No time spent doing this activity" ;
+label define dur0900   0 "No time spent doing this activity" ;
+label define dur1010   0 "No time spent doing this activity" ;
+label define dur1020   0 "No time spent doing this activity" ;
+label define dur1100   0 "No time spent doing this activity" ;
+label define dur1200   0 "No time spent doing this activity" ;
+label define dur1300   0 "No time spent doing this activity" ;
+label define dur1400   0 "No time spent doing this activity" ;
+label define dur1510   0 "No time spent doing this activity" ;
+label define dur1520   0 "No time spent doing this activity" ;
+label define dur1610   0 "No time spent doing this activity" ;
+label define dur1620   0 "No time spent doing this activity" ;
+label define dur1630   0 "No time spent doing this activity" ;
+label define dur1640   0 "No time spent doing this activity" ;
+label define dur1711   0 "No time spent doing this activity" ;
+label define dur1712   0 "No time spent doing this activity" ;
+label define dur1720   0 "No time spent doing this activity" ;
+label define dur1730   0 "No time spent doing this activity" ;
+label define dur1811   0 "No time spent doing this activity" ;
+label define dur1812   0 "No time spent doing this activity" ;
+label define dur1813   0 "No time spent doing this activity" ;
+label define dur1820   0 "No time spent doing this activity" ;
+label define dur1830   0 "No time spent doing this activity" ;
+label define dur1840   0 "No time spent doing this activity" ;
+label define dur1850   0 "No time spent doing this activity" ;
+label define dur1860   0 "No time spent doing this activity" ;
+label define dur1900   0 "No time spent doing this activity" ;
+label define dur2001   0 "No time spent doing this activity" ;
+label define dur2002   0 "No time spent doing this activity" ;
+label define dur2003   0 "No time spent doing this activity" ;
+label define dur2110   0 "No time spent doing this activity" ;
+label define dur2120   0 "No time spent doing this activity" ;
+label define dur2130   0 "No time spent doing this activity" ;
+label define dur2200   0 "No time spent doing this activity" ;
+label define dur2301   0 "No time spent doing this activity" ;
+label define dur2302   0 "No time spent doing this activity" ;
+label define dur2400   0 "No time spent doing this activity" ;
+label define dur2501   0 "No time spent doing this activity" ;
+label define dur2502   0 "No time spent doing this activity" ;
+label define dur2600   0 "No time spent doing this activity" ;
+label define dur2711   0 "No time spent doing this activity" ;
+label define dur2712   0 "No time spent doing this activity" ;
+label define dur2713   0 "No time spent doing this activity" ;
+label define dur2721   0 "No time spent doing this activity" ;
+label define dur2722   0 "No time spent doing this activity" ;
+label define dur2811   0 "No time spent doing this activity" ;
+label define dur2812   0 "No time spent doing this activity" ;
+label define dur2818   0 "No time spent doing this activity" ;
+label define dur2819   0 "No time spent doing this activity" ;
+label define dur2821   0 "No time spent doing this activity" ;
+label define dur2822   0 "No time spent doing this activity" ;
+label define dur2829   0 "No time spent doing this activity" ;
+label define dur2910   0 "No time spent doing this activity" ;
+label define dur2920   0 "No time spent doing this activity" ;
+label define dur3010   0 "No time spent doing this activity" ;
+label define dur3021   0 "No time spent doing this activity" ;
+label define dur3022   0 "No time spent doing this activity" ;
+label define dur3023   0 "No time spent doing this activity" ;
+label define dur3024   0 "No time spent doing this activity" ;
+label define dur3029   0 "No time spent doing this activity" ;
+label define dur3030   0 "No time spent doing this activity" ;
+label define dur3040   0 "No time spent doing this activity" ;
+label define dur3101   0 "No time spent doing this activity" ;
+label define dur3102   0 "No time spent doing this activity" ;
+label define dur3103   0 "No time spent doing this activity" ;
+label define dur3200   0 "No time spent doing this activity" ;
+label define dur3310   0 "No time spent doing this activity" ;
+label define dur3321   0 "No time spent doing this activity" ;
+label define dur3322   0 "No time spent doing this activity" ;
+label define dur3401   0 "No time spent doing this activity" ;
+label define dur3402   0 "No time spent doing this activity" ;
+label define dur3501   0 "No time spent doing this activity" ;
+label define dur3502   0 "No time spent doing this activity" ;
+label define dur3503   0 "No time spent doing this activity" ;
+label define dur3509   0 "No time spent doing this activity" ;
+label define dur3610   0 "No time spent doing this activity" ;
+label define dur3620   0 "No time spent doing this activity" ;
+label define dur3700   0 "No time spent doing this activity" ;
+label define dur3801   0 "No time spent doing this activity" ;
+label define dur3802   0 "No time spent doing this activity" ;
+label define dur3803   0 "No time spent doing this activity" ;
+label define dur3804   0 "No time spent doing this activity" ;
+label define dur3809   0 "No time spent doing this activity" ;
+label define dur3900   0 "No time spent doing this activity" ;
+label define dur4000   0 "No time spent doing this activity" ;
+label define dur4101   0 "No time spent doing this activity" ;
+label define dur4102   0 "No time spent doing this activity" ;
+label define dur4103   0 "No time spent doing this activity" ;
+label define dur4110   0 "No time spent doing this activity" ;
+label define dur4300   0 "No time spent doing this activity" ;
+label define dur4310   0 "No time spent doing this activity" ;
+label define dur4400   0 "No time spent doing this activity" ;
+label define dur4500   0 "No time spent doing this activity" ;
+label define dur4600   0 "No time spent doing this activity" ;
+label define dur4700   0 "No time spent doing this activity" ;
+label define dur4800   0 "No time spent doing this activity" ;
+label define dur4910   0 "No time spent doing this activity" ;
+label define dur4920   0 "No time spent doing this activity" ;
+label define dur5000   0 "No time spent doing this activity" ;
+label define dur5110   0 "No time spent doing this activity" ;
+label define dur5120   0 "No time spent doing this activity" ;
+label define dur5200   0 "No time spent doing this activity" ;
+label define dur5301   0 "No time spent doing this activity" ;
+label define dur5302   0 "No time spent doing this activity" ;
+label define dur5400   0 "No time spent doing this activity" ;
+label define dur5500   0 "No time spent doing this activity" ;
+label define dur5601   0 "No time spent doing this activity" ;
+label define dur5602   0 "No time spent doing this activity" ;
+label define dur5801   0 "No time spent doing this activity" ;
+label define dur5809   0 "No time spent doing this activity" ;
+label define dur5900   0 "No time spent doing this activity" ;
+label define dur6000   0 "No time spent doing this activity" ;
+label define dur6100   0 "No time spent doing this activity" ;
+label define dur6200   0 "No time spent doing this activity" ;
+label define dur6300   0 "No time spent doing this activity" ;
+label define dur6400   0 "No time spent doing this activity" ;
+label define dur6420   0 "No time spent doing this activity" ;
+label define dur6510   0 "No time spent doing this activity" ;
+label define dur6520   0 "No time spent doing this activity" ;
+label define dur6601   0 "No time spent doing this activity" ;
+label define dur6602   0 "No time spent doing this activity" ;
+label define dur6603   0 "No time spent doing this activity" ;
+label define dur6604   0 "No time spent doing this activity" ;
+label define dur6605   0 "No time spent doing this activity" ;
+label define dur6609   0 "No time spent doing this activity" ;
+label define dur6610   0 "No time spent doing this activity" ;
+label define dur6711   0 "No time spent doing this activity" ;
+label define dur6712   0 "No time spent doing this activity" ;
+label define dur6720   0 "No time spent doing this activity" ;
+label define dur6731   0 "No time spent doing this activity" ;
+label define dur6732   0 "No time spent doing this activity" ;
+label define dur6733   0 "No time spent doing this activity" ;
+label define dur6734   0 "No time spent doing this activity" ;
+label define dur6735   0 "No time spent doing this activity" ;
+label define dur6739   0 "No time spent doing this activity" ;
+label define dur6740   0 "No time spent doing this activity" ;
+label define dur6751   0 "No time spent doing this activity" ;
+label define dur6752   0 "No time spent doing this activity" ;
+label define dur6753   0 "No time spent doing this activity" ;
+label define dur6754   0 "No time spent doing this activity" ;
+label define dur6759   0 "No time spent doing this activity" ;
+label define dur6760   0 "No time spent doing this activity" ;
+label define dur6770   0 "No time spent doing this activity" ;
+label define dur6780   0 "No time spent doing this activity" ;
+label define dur6801   0 "No time spent doing this activity" ;
+label define dur6802   0 "No time spent doing this activity" ;
+label define dur6910   0 "No time spent doing this activity" ;
+label define dur6920   0 "No time spent doing this activity" ;
+label define dur7010   0 "No time spent doing this activity" ;
+label define dur7020   0 "No time spent doing this activity" ;
+label define dur7110   0 "No time spent doing this activity" ;
+label define dur7120   0 "No time spent doing this activity" ;
+label define dur7130   0 "No time spent doing this activity" ;
+label define dur7200   0 "No time spent doing this activity" ;
+label define dur7300   0 "No time spent doing this activity" ;
+label define dur7410   0 "No time spent doing this activity" ;
+label define dur7420   0 "No time spent doing this activity" ;
+label define dur7430   0 "No time spent doing this activity" ;
+label define dur7510   0 "No time spent doing this activity" ;
+label define dur7520   0 "No time spent doing this activity" ;
+label define dur7530   0 "No time spent doing this activity" ;
+label define dur7540   0 "No time spent doing this activity" ;
+label define dur7600   0 "No time spent doing this activity" ;
+label define dur7700   0 "No time spent doing this activity" ;
+label define dur7801   0 "No time spent doing this activity" ;
+label define dur7802   0 "No time spent doing this activity" ;
+label define dur7910   0 "No time spent doing this activity" ;
+label define dur7920   0 "No time spent doing this activity" ;
+label define dur7930   0 "No time spent doing this activity" ;
+label define dur8000   0 "No time spent doing this activity" ;
+label define dur8011   0 "No time spent doing this activity" ;
+label define dur8012   0 "No time spent doing this activity" ;
+label define dur8013   0 "No time spent doing this activity" ;
+label define dur8014   0 "No time spent doing this activity" ;
+label define dur8015   0 "No time spent doing this activity" ;
+label define dur8016   0 "No time spent doing this activity" ;
+label define dur8017   0 "No time spent doing this activity" ;
+label define dur8021   0 "No time spent doing this activity" ;
+label define dur8022   0 "No time spent doing this activity" ;
+label define dur8031   0 "No time spent doing this activity" ;
+label define dur8032   0 "No time spent doing this activity" ;
+label define dur8041   0 "No time spent doing this activity" ;
+label define dur8042   0 "No time spent doing this activity" ;
+label define dur8051   0 "No time spent doing this activity" ;
+label define dur8052   0 "No time spent doing this activity" ;
+label define dur8053   0 "No time spent doing this activity" ;
+label define dur8061   0 "No time spent doing this activity" ;
+label define dur8062   0 "No time spent doing this activity" ;
+label define dur8071   0 "No time spent doing this activity" ;
+label define dur8072   0 "No time spent doing this activity" ;
+label define dur8073   0 "No time spent doing this activity" ;
+label define dur8074   0 "No time spent doing this activity" ;
+label define dur8080   0 "No time spent doing this activity" ;
+label define dur8090   0 "No time spent doing this activity" ;
+label define dur8101   0 "No time spent doing this activity" ;
+label define dur8109   0 "No time spent doing this activity" ;
+label define dur8110   0 "No time spent doing this activity" ;
+label define dur8120   0 "No time spent doing this activity" ;
+label define dur8130   0 "No time spent doing this activity" ;
+label define dur8140   0 "No time spent doing this activity" ;
+label define dur8150   0 "No time spent doing this activity" ;
+label define dur8160   0 "No time spent doing this activity" ;
+label define dur8211   0 "No time spent doing this activity" ;
+label define dur8212   0 "No time spent doing this activity" ;
+label define dur8213   0 "No time spent doing this activity" ;
+label define dur8220   0 "No time spent doing this activity" ;
+label define dur8310   0 "No time spent doing this activity" ;
+label define dur8320   0 "No time spent doing this activity" ;
+label define dur8410   0 "No time spent doing this activity" ;
+label define dur8420   0 "No time spent doing this activity" ;
+label define dur8501   0 "No time spent doing this activity" ;
+label define dur8502   0 "No time spent doing this activity" ;
+label define dur8610   0 "No time spent doing this activity" ;
+label define dur8621   0 "No time spent doing this activity" ;
+label define dur8622   0 "No time spent doing this activity" ;
+label define dur8630   0 "No time spent doing this activity" ;
+label define dur8640   0 "No time spent doing this activity" ;
+label define dur8650   0 "No time spent doing this activity" ;
+label define dur8660   0 "No time spent doing this activity" ;
+label define dur8671   0 "No time spent doing this activity" ;
+label define dur8679   0 "No time spent doing this activity" ;
+label define dur8710   0 "No time spent doing this activity" ;
+label define dur8720   0 "No time spent doing this activity" ;
+label define dur8730   0 "No time spent doing this activity" ;
+label define dur8800   0 "No time spent doing this activity" ;
+label define dur8910   0 "No time spent doing this activity" ;
+label define dur8920   0 "No time spent doing this activity" ;
+label define dur8930   0 "No time spent doing this activity" ;
+label define dur8940   0 "No time spent doing this activity" ;
+label define dur9001   0 "No time spent doing this activity" ;
+label define dur9002   0 "No time spent doing this activity" ;
+label define dur9110   0 "No time spent doing this activity" ;
+label define dur9120   0 "No time spent doing this activity" ;
+label define dur9130   0 "No time spent doing this activity" ;
+label define dur9141   0 "No time spent doing this activity" ;
+label define dur9149   0 "No time spent doing this activity" ;
+label define dur9200   0 "No time spent doing this activity" ;
+label define dur9310   0 "No time spent doing this activity" ;
+label define dur9321   0 "No time spent doing this activity" ;
+label define dur9322   0 "No time spent doing this activity" ;
+label define dur9401   0 "No time spent doing this activity" ;
+label define dur9402   0 "No time spent doing this activity" ;
+label define dur9500   0 "No time spent doing this activity" ;
+label define dur9511   0 "No time spent doing this activity" ;
+label define dur9512   0 "No time spent doing this activity" ;
+label define dur9513   0 "No time spent doing this activity" ;
+label define dur9610   0 "No time spent doing this activity" ;
+label define dur9620   0 "No time spent doing this activity" ;
+label define dur9801   0 "No time spent doing this activity" ;
+label define dur9809   0 "No time spent doing this activity" ;
+label define dur9900   0 "No time spent doing this activity" ;
+label define durloc01  0 "No time spent" ;
+label define durloc02  0 "No time spent" ;
+label define durloc03  0 "No time spent" ;
+label define durloc04  0 "No time spent" ;
+label define durloc05  0 "No time spent" ;
+label define durloc06  0 "No time spent" ;
+label define durloc07  0 "No time spent" ;
+label define durloc08  0 "No time spent" ;
+label define durloc09  0 "No time spent" ;
+label define durloc10  0 "No time spent" ;
+label define durloc11  0 "No time spent" ;
+label define durloc12  0 "No time spent" ;
+label define durloc13  0 "No time spent" ;
+label define durloc14  0 "No time spent" ;
+label define durloc15  0 "No time spent" ;
+label define durloc16  0 "No time spent" ;
+label define durloc17  0 "No time spent" ;
+label define durloc18  0 "No time spent" ;
+label define durloc19  0 "No time spent" ;
+label define durloc20  0 "No time spent" ;
+label define durloc21  0 "No time spent" ;
+label define durloc97  0 "No time spent" ;
+label define durloc98  0 "No time spent" ;
+label define durloc99  0 "No time spent" ;
+label define dursoc01  0 "No time spent" ;
+label define dursoc02  0 "No time spent" ;
+label define dursoc03  0 "No time spent" ;
+label define dursoc04  0 "No time spent" ;
+label define dursoc05  0 "No time spent" ;
+label define dursoc06  0 "No time spent" ;
+label define dursoc07  0 "No time spent" ;
+label define dursoc08  0 "No time spent" ;
+label define dursoc09  0 "No time spent" ;
+label define dursoc10  0 "No time spent" ;
+label define dursoc11  0 "No time spent" ;
+label define dursoc97  0 "No time spent" ;
+label define dursoc98  0 "No time spent" ;
+label define dursoc99  0 "No time spent" ;
+label define durmein   0 "No time spent" ;
+label define durmeout  0 "No time spent" ;
+label define dvpaid    0 "No time spent doing these activities." ;
+label define dvdom     0 "No time spent doing these activities." ;
+label define dvchildc  0 "No time spent doing these activities." ;
+label define dvshop    0 "No time spent doing these activities." ;
+label define dvpers    0 "No time spent doing these activities." ;
+label define dveducat  0 "No time spent doing these activities." ;
+label define dvorgan   0 "No time spent doing these activities." ;
+label define dventert  0 "No time spent doing these activities." ;
+label define dvsport   0 "No time spent doing these activities." ;
+label define dvmedia   0 "No time spent doing these activities." ;
+label define dvresid   0 "No time spent doing these activities." ;
+label define dvtrans   0 "No time spent doing these activities." ;
+label define workpaid  0 "No time spent doing these activities." ;
+label define othrpaid  0 "No time spent doing these activities." ;
+label define cookdoms  0 "No time spent doing these activities." ;
+label define hskpdoms  0 "No time spent doing these activities." ;
+label define maindoms  0 "No time spent doing these activities." ;
+label define othrdoms  0 "No time spent doing these activities." ;
+label define shopdoms  0 "No time spent doing these activities." ;
+label define chlddoms  0 "No time spent doing these activities." ;
+label define vlntorgn  0 "No time spent doing these activities." ;
+label define schleduc  0 "No time spent doing these activities." ;
+label define mealpers  0 "No time spent doing these activities." ;
+label define othrpers  0 "No time spent doing these activities." ;
+label define restsocl  0 "No time spent doing these activities." ;
+label define homesocl  0 "No time spent doing these activities." ;
+label define othrsocl  0 "No time spent doing these activities." ;
+label define telemdia  0 "No time spent doing these activities." ;
+label define readmdia  0 "No time spent doing these activities." ;
+label define othrmdia  0 "No time spent doing these activities." ;
+label define entrevnt  0 "No time spent doing these activities." ;
+label define sprtactv  0 "No time spent doing these activities." ;
+label define othractv  0 "No time spent doing these activities." ;
+label define totepiso  0 "No occurence" ;
+label define epi0020   0 "No occurence" ;
+label define epi0110   0 "No occurence" ;
+label define epi0120   0 "No occurence" ;
+label define epi0210   0 "No occurence" ;
+label define epi0220   0 "No occurence" ;
+label define epi0230   0 "No occurence" ;
+label define epi0300   0 "No occurence" ;
+label define epi0400   0 "No occurence" ;
+label define epi0500   0 "No occurence" ;
+label define epi0600   0 "No occurence" ;
+label define epi0700   0 "No occurence" ;
+label define epi0801   0 "No occurence" ;
+label define epi0802   0 "No occurence" ;
+label define epi0803   0 "No occurence" ;
+label define epi0809   0 "No occurence" ;
+label define epi0900   0 "No occurence" ;
+label define epi1010   0 "No occurence" ;
+label define epi1020   0 "No occurence" ;
+label define epi1100   0 "No occurence" ;
+label define epi1200   0 "No occurence" ;
+label define epi1300   0 "No occurence" ;
+label define epi1400   0 "No occurence" ;
+label define epi1510   0 "No occurence" ;
+label define epi1520   0 "No occurence" ;
+label define epi1610   0 "No occurence" ;
+label define epi1620   0 "No occurence" ;
+label define epi1630   0 "No occurence" ;
+label define epi1640   0 "No occurence" ;
+label define epi1711   0 "No occurence" ;
+label define epi1712   0 "No occurence" ;
+label define epi1720   0 "No occurence" ;
+label define epi1730   0 "No occurence" ;
+label define epi1811   0 "No occurence" ;
+label define epi1812   0 "No occurence" ;
+label define epi1813   0 "No occurence" ;
+label define epi1820   0 "No occurence" ;
+label define epi1830   0 "No occurence" ;
+label define epi1840   0 "No occurence" ;
+label define epi1850   0 "No occurence" ;
+label define epi1860   0 "No occurence" ;
+label define epi1900   0 "No occurence" ;
+label define epi2001   0 "No occurence" ;
+label define epi2002   0 "No occurence" ;
+label define epi2003   0 "No occurence" ;
+label define epi2110   0 "No occurence" ;
+label define epi2120   0 "No occurence" ;
+label define epi2130   0 "No occurence" ;
+label define epi2200   0 "No occurence" ;
+label define epi2301   0 "No occurence" ;
+label define epi2302   0 "No occurence" ;
+label define epi2400   0 "No occurence" ;
+label define epi2501   0 "No occurence" ;
+label define epi2502   0 "No occurence" ;
+label define epi2600   0 "No occurence" ;
+label define epi2711   0 "No occurence" ;
+label define epi2712   0 "No occurence" ;
+label define epi2713   0 "No occurence" ;
+label define epi2721   0 "No occurence" ;
+label define epi2722   0 "No occurence" ;
+label define epi2811   0 "No occurence" ;
+label define epi2812   0 "No occurence" ;
+label define epi2818   0 "No occurence" ;
+label define epi2819   0 "No occurence" ;
+label define epi2821   0 "No occurence" ;
+label define epi2822   0 "No occurence" ;
+label define epi2829   0 "No occurence" ;
+label define epi2910   0 "No occurence" ;
+label define epi2920   0 "No occurence" ;
+label define epi3010   0 "No occurence" ;
+label define epi3021   0 "No occurence" ;
+label define epi3022   0 "No occurence" ;
+label define epi3023   0 "No occurence" ;
+label define epi3024   0 "No occurence" ;
+label define epi3029   0 "No occurence" ;
+label define epi3030   0 "No occurence" ;
+label define epi3040   0 "No occurence" ;
+label define epi3101   0 "No occurence" ;
+label define epi3102   0 "No occurence" ;
+label define epi3103   0 "No occurence" ;
+label define epi3200   0 "No occurence" ;
+label define epi3310   0 "No occurence" ;
+label define epi3321   0 "No occurence" ;
+label define epi3322   0 "No occurence" ;
+label define epi3401   0 "No occurence" ;
+label define epi3402   0 "No occurence" ;
+label define epi3501   0 "No occurence" ;
+label define epi3502   0 "No occurence" ;
+label define epi3503   0 "No occurence" ;
+label define epi3509   0 "No occurence" ;
+label define epi3610   0 "No occurence" ;
+label define epi3620   0 "No occurence" ;
+label define epi3700   0 "No occurence" ;
+label define epi3801   0 "No occurence" ;
+label define epi3802   0 "No occurence" ;
+label define epi3803   0 "No occurence" ;
+label define epi3804   0 "No occurence" ;
+label define epi3809   0 "No occurence" ;
+label define epi3900   0 "No occurence" ;
+label define epi4000   0 "No occurence" ;
+label define epi4101   0 "No occurence" ;
+label define epi4102   0 "No occurence" ;
+label define epi4103   0 "No occurence" ;
+label define epi4110   0 "No occurence" ;
+label define epi4300   0 "No occurence" ;
+label define epi4310   0 "No occurence" ;
+label define epi4400   0 "No occurence" ;
+label define epi4500   0 "No occurence" ;
+label define epi4600   0 "No occurence" ;
+label define epi4700   0 "No occurence" ;
+label define epi4800   0 "No occurence" ;
+label define epi4910   0 "No occurence" ;
+label define epi4920   0 "No occurence" ;
+label define epi5000   0 "No occurence" ;
+label define epi5110   0 "No occurence" ;
+label define epi5120   0 "No occurence" ;
+label define epi5200   0 "No occurence" ;
+label define epi5301   0 "No occurence" ;
+label define epi5302   0 "No occurence" ;
+label define epi5400   0 "No occurence" ;
+label define epi5500   0 "No occurence" ;
+label define epi5601   0 "No occurence" ;
+label define epi5602   0 "No occurence" ;
+label define epi5801   0 "No occurence" ;
+label define epi5809   0 "No occurence" ;
+label define epi5900   0 "No occurence" ;
+label define epi6000   0 "No occurence" ;
+label define epi6100   0 "No occurence" ;
+label define epi6200   0 "No occurence" ;
+label define epi6300   0 "No occurence" ;
+label define epi6400   0 "No occurence" ;
+label define epi6420   0 "No occurence" ;
+label define epi6510   0 "No occurence" ;
+label define epi6520   0 "No occurence" ;
+label define epi6601   0 "No occurence" ;
+label define epi6602   0 "No occurence" ;
+label define epi6603   0 "No occurence" ;
+label define epi6604   0 "No occurence" ;
+label define epi6605   0 "No occurence" ;
+label define epi6609   0 "No occurence" ;
+label define epi6610   0 "No occurence" ;
+label define epi6711   0 "No occurence" ;
+label define epi6712   0 "No occurence" ;
+label define epi6720   0 "No occurence" ;
+label define epi6731   0 "No occurence" ;
+label define epi6732   0 "No occurence" ;
+label define epi6733   0 "No occurence" ;
+label define epi6734   0 "No occurence" ;
+label define epi6735   0 "No occurence" ;
+label define epi6739   0 "No occurence" ;
+label define epi6740   0 "No occurence" ;
+label define epi6751   0 "No occurence" ;
+label define epi6752   0 "No occurence" ;
+label define epi6753   0 "No occurence" ;
+label define epi6754   0 "No occurence" ;
+label define epi6759   0 "No occurence" ;
+label define epi6760   0 "No occurence" ;
+label define epi6770   0 "No occurence" ;
+label define epi6780   0 "No occurence" ;
+label define epi6801   0 "No occurence" ;
+label define epi6802   0 "No occurence" ;
+label define epi6910   0 "No occurence" ;
+label define epi6920   0 "No occurence" ;
+label define epi7010   0 "No occurence" ;
+label define epi7020   0 "No occurence" ;
+label define epi7110   0 "No occurence" ;
+label define epi7120   0 "No occurence" ;
+label define epi7130   0 "No occurence" ;
+label define epi7200   0 "No occurence" ;
+label define epi7300   0 "No occurence" ;
+label define epi7410   0 "No occurence" ;
+label define epi7420   0 "No occurence" ;
+label define epi7430   0 "No occurence" ;
+label define epi7510   0 "No occurence" ;
+label define epi7520   0 "No occurence" ;
+label define epi7530   0 "No occurence" ;
+label define epi7540   0 "No occurence" ;
+label define epi7600   0 "No occurence" ;
+label define epi7700   0 "No occurence" ;
+label define epi7801   0 "No occurence" ;
+label define epi7802   0 "No occurence" ;
+label define epi7910   0 "No occurence" ;
+label define epi7920   0 "No occurence" ;
+label define epi7930   0 "No occurence" ;
+label define epi8000   0 "No occurence" ;
+label define epi8011   0 "No occurence" ;
+label define epi8012   0 "No occurence" ;
+label define epi8013   0 "No occurence" ;
+label define epi8014   0 "No occurence" ;
+label define epi8015   0 "No occurence" ;
+label define epi8016   0 "No occurence" ;
+label define epi8017   0 "No occurence" ;
+label define epi8021   0 "No occurence" ;
+label define epi8022   0 "No occurence" ;
+label define epi8031   0 "No occurence" ;
+label define epi8032   0 "No occurence" ;
+label define epi8041   0 "No occurence" ;
+label define epi8042   0 "No occurence" ;
+label define epi8051   0 "No occurence" ;
+label define epi8052   0 "No occurence" ;
+label define epi8053   0 "No occurence" ;
+label define epi8061   0 "No occurence" ;
+label define epi8062   0 "No occurence" ;
+label define epi8071   0 "No occurence" ;
+label define epi8072   0 "No occurence" ;
+label define epi8073   0 "No occurence" ;
+label define epi8074   0 "No occurence" ;
+label define epi8080   0 "No occurence" ;
+label define epi8090   0 "No occurence" ;
+label define epi8101   0 "No occurence" ;
+label define epi8109   0 "No occurence" ;
+label define epi8110   0 "No occurence" ;
+label define epi8120   0 "No occurence" ;
+label define epi8130   0 "No occurence" ;
+label define epi8140   0 "No occurence" ;
+label define epi8150   0 "No occurence" ;
+label define epi8160   0 "No occurence" ;
+label define epi8211   0 "No occurence" ;
+label define epi8212   0 "No occurence" ;
+label define epi8213   0 "No occurence" ;
+label define epi8220   0 "No occurence" ;
+label define epi8310   0 "No occurence" ;
+label define epi8320   0 "No occurence" ;
+label define epi8410   0 "No occurence" ;
+label define epi8420   0 "No occurence" ;
+label define epi8501   0 "No occurence" ;
+label define epi8502   0 "No occurence" ;
+label define epi8610   0 "No occurence" ;
+label define epi8621   0 "No occurence" ;
+label define epi8622   0 "No occurence" ;
+label define epi8630   0 "No occurence" ;
+label define epi8640   0 "No occurence" ;
+label define epi8650   0 "No occurence" ;
+label define epi8660   0 "No occurence" ;
+label define epi8671   0 "No occurence" ;
+label define epi8679   0 "No occurence" ;
+label define epi8710   0 "No occurence" ;
+label define epi8720   0 "No occurence" ;
+label define epi8730   0 "No occurence" ;
+label define epi8800   0 "No occurence" ;
+label define epi8910   0 "No occurence" ;
+label define epi8920   0 "No occurence" ;
+label define epi8930   0 "No occurence" ;
+label define epi8940   0 "No occurence" ;
+label define epi9001   0 "No occurence" ;
+label define epi9002   0 "No occurence" ;
+label define epi9110   0 "No occurence" ;
+label define epi9120   0 "No occurence" ;
+label define epi9130   0 "No occurence" ;
+label define epi9141   0 "No occurence" ;
+label define epi9149   0 "No occurence" ;
+label define epi9200   0 "No occurence" ;
+label define epi9310   0 "No occurence" ;
+label define epi9321   0 "No occurence" ;
+label define epi9322   0 "No occurence" ;
+label define epi9401   0 "No occurence" ;
+label define epi9402   0 "No occurence" ;
+label define epi9500   0 "No occurence" ;
+label define epi9511   0 "No occurence" ;
+label define epi9512   0 "No occurence" ;
+label define epi9513   0 "No occurence" ;
+label define epi9610   0 "No occurence" ;
+label define epi9620   0 "No occurence" ;
+label define epi9801   0 "No occurence" ;
+label define epi9809   0 "No occurence" ;
+label define epi9900   0 "No occurence" ;
+label define sleep1s   9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define sleep1d   9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define sleep2e   9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define sleep2d   9997 "Not asked" 9998 "Not stated" 9999 "Don't know" ;
+label define tcs_q110  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q120  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q130  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q140  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q150  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q160  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q170  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q180  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q190  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define tcs_q200  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define timecr    0 "Zero Yes codes" 1 "One Yes code" 2 "Two Yes codes" 
+                       3 "Three Yes codes" 4 "Four Yes codes" 
+                       5 "Five Yes codes" 6 "Six Yes codes" 
+                       7 "Seven Yes codes" 8 "Eight Yes codes" 
+                       9 "Nine Yes codes" 10 "Ten Yes codes" 98 "Not stated" ;
+label define timens    0 "Zero Not stated codes" 1 "One Not stated code" 
+                       2 "Two Not stated codes" 3 "Three Not stated codes" 
+                       4 "Four Not stated codes" 5 "Five Not stated codes" 
+                       6 "Six Not stated codes" 7 "Seven Not stated codes" 
+                       8 "Eight Not stated codes" 9 "Nine Not stated codes" 
+                       10 "Ten Not stated codes" ;
+label define uwa_q110  999.97 "Not asked" 999.98 "Not stated" 
+                       999.99 "Don't know" ;
+label define uwa_q120  999.98 "Not stated" 999.99 "Don't know" ;
+label define uwa_q130  99.98 "Not stated" 99.99 "Don't know" ;
+label define uwa_q140  99.98 "Not stated" 99.99 "Don't know" ;
+label define uwa_q150  99.97 "Not asked" 99.98 "Not stated" 
+                       99.99 "Don't know" ;
+label define uwa_q160  99.98 "Not stated" 99.99 "Don't know" ;
+label define vcg_q300  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define vcg_q310  1 "Over 15 hours per month" 
+                       2 "5 to 15 hours per month" 3 "1 to 4 hours per month" 
+                       4 "Less than 1 hour per month" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lsr_q100  1 "Very dissatisfied" 10 "Very satisfied" 
+                       11 "No opinion" 98 "Not stated" 99 "Don't know" ;
+label define lsr_q130  0 "None" 1 "1 day" 2 "2 days" 3 "3 days" 4 "4 days" 
+                       5 "5 days" 6 "6 days" 7 "7 days" 98 "Not stated" 
+                       99 "Don't know" ;
+label define srh_q110  1 "... excellent?" 2 "... very good?" 3 "... good?" 
+                       4 "... fair?" 5 "... poor?" 8 "Not stated" 
+                       9 "Don't know" ;
+label define srh_q115  1 "... excellent?" 2 "... very good?" 3 "... good?" 
+                       4 "... fair?" 5 "... poor?" 8 "Not stated" 
+                       9 "Don't know" ;
+label define hal_q310  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q320  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q330  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q340  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q350  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q360  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q410  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q420  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q430  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define hal_q440  1 "No" 2 "Sometimes" 3 "Often or always" 
+                       8 "Not stated" 9 "Don't know" ;
+label define haldv     1 "No difficulty" 2 "Difficulty sometimes" 
+                       3 "Difficulty often or always" 8 "Not stated" 
+                       9 "Don't know" ;
+label define hal_q450  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define mss_q110  1 "... not at all stressful?" 
+                       2 "... not very stressful?" 3 "... a bit stressful?" 
+                       4 "... quite a bit stressful?" 
+                       5 "... extremely stressful?" 8 "Not stated" 
+                       9 "Don't know" ;
+label define mss_q130  1 "Work" 2 "Financial concerns" 3 "Family" 
+                       4 "School work" 5 "Not enough time" 6 "Health" 
+                       7 "Other" 97 "Not asked" 98 "Not stated" 
+                       99 "Don't know" ;
+label define lca_q110  1 "Daily (365 times)" 
+                       2 "At least once a week (52 to 364 times)" 
+                       3 "At least once a month (12 to 51 times)" 
+                       4 "Less than once a month (1 to 11 times)" 
+                       5 "Not in the past 12 months" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lca_q120  1 "At least once a week (52 or more times)" 
+                       2 "At least once a month (12 to 51 times)" 
+                       3 "5 or more times a year, but not every month (5 to 11 times)" 
+                       4 "1 to 4 times a year" 5 "Not in past 12 months" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define lca_q130  1 "At least a book a week (52 or more)" 
+                       2 "At least a book a month (12 to 51 books a year)" 
+                       3 "At least a book every three months (4 to 11 books a year)" 
+                       4 "At least a book every six months (2 to 3 books a year)" 
+                       5 "At least a book a year" 6 "None" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lca_q210  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q220  1 "At least once a week (52 or more times)" 
+                       2 "At least once a month (12 to 51 times)" 
+                       3 "5 or more times a year, but not every month (5 to 11 times)" 
+                       4 "1 to 4 times a year" 5 "Not in past 12 months" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define lca_q230  1 "Daily (365 times)" 
+                       2 "At least once a week (52 to 364 times)" 
+                       3 "At least once a month (12 to 51 times)" 
+                       4 "Less than once a month (1 to 11 times)" 
+                       5 "Not in the past 12 months" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lca_q240  1 "Daily (365 times)" 
+                       2 "At least once a week (52 to 364 times)" 
+                       3 "At least once a month (12 to 51 times)" 
+                       4 "Less than once a month (1 to 11 times)" 
+                       5 "Not in the past 12 months" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define lca_q310  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q320  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q330  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q340  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q350  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q360  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q410  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q420  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q430  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q440  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define lca_q450  1 "1 to 4 times a year (1 to 4 times)" 
+                       2 "5 or more times, but not every month (5 to 11 times)" 
+                       3 "At least once every month (12 or more times)" 
+                       4 "Not in past 12 months" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q100  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp02_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp02  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp03  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp03  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp03_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp03_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp03_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp03_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp04  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp04  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp04_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp04_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp04_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp04_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp07_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp07  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp08_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp08  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp10_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp10  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp12_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp12  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp12_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp12_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp12_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp12_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp14  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp14  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp14_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp14_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp14_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp14_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp14_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp15  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp15  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp15_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp15_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp15_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp15_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp20  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp20  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp20_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp20_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp20_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp20_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp25_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp25  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp29_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp29  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp29_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp29_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp29_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp29_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp31_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp31  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp34  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp34  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp34_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp34_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp34_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp34_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp35  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp35  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp35_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp35_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp35_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp35_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp36_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp36  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp37_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp37  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp39_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp39  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp42  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp42  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp42_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp42_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp42_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp42_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp44  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp44  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp46_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp46  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp47_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp47  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp48  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp48  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp52  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp52  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp52_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp52_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp52_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp52_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp55_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp55  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp57  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp57  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp57_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp57_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp57_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp57_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp57_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp57_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp62_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp62  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp65  1 "Competition" 2 "Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp65  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sco_sp65_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp65_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp65_c0304 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sco_sp65_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_sp71_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp71  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp73_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp73  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp77_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp77  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp80_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp80  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp84_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sfr_sp84  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_sp85_c 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c1 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c2 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c3 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c4 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c5 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c6 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spa_spoth_c7 1 "Competition/Recreation" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define sp00_91   0 "No sport" 1 "One sport" 2 "Two sports" 
+                       3 "Three sports" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define sp01_91   0 "No sport or sport(s) from exclusion list or others" 
+                       1 "One sport" 2 "Two sports" 3 "Three sports" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spa_q200  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q210_tot 1 "One sport" 2 "Two sports" 3 "Three sports" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spa_q270  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q310  1 "Very important" 2 "Somewhat important" 
+                       3 "Not important" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q320  1 "Very important" 2 "Somewhat important" 
+                       3 "Not important" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q330  1 "Very important" 2 "Somewhat important" 
+                       3 "Not important" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q340  1 "Very important" 2 "Somewhat important" 
+                       3 "Not important" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q350  1 "Very important" 2 "Somewhat important" 
+                       3 "Not important" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c06 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c07 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c08 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c09 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c10 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c11 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q410_c12 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q420  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q430  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q440  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spa_q450  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define spc_sp02  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define sfr_sp85  1 "2 to 3 times per month" 2 "Once or twice per week" 
+                       3 "3 or more times per week" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define spp_q110  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define hms_q105_tot_c 1 "One child" 2 "Two children" 3 "Three children" 
+                       4 "Four children" 
+                       6 "No children participated in sport, not stated, don't know" 
+                       7 "Not asked" ;
+label define hms_q105_rel_a 1 "Son" 2 "Daughter" 3 "Other relative" 7 "Not asked" 
+                       9 "Not stated, don't know" ;
+label define hms_q105_agegr5_a 1 "5 to 9" 2 "10 to 14" 
+                       7 "No children aged 5 to 14 in household, not asked, not stated" ;
+label define hms_q105_commona 1 "One sport in common" 2 "Two sports in common" 
+                       3 "Three sports in common" 6 "No sports in common" 
+                       96 "Not applicable: no participation by respondent" 
+                       97 "Not asked" 98 "Not stated" ;
+label define hms_q105_rel_b 1 "Son" 2 "Daughter" 3 "Other relative" 7 "Not asked" 
+                       9 "Not stated, don't know" ;
+label define hms_q105_agegr5_b 1 "5 to 9" 2 "10 to 14" 
+                       7 "No children aged 5 to 14 in household, not asked, not stated" ;
+label define hms_q105_commonb 1 "One sport in common" 2 "Two sports in common" 
+                       3 "Three sports in common" 6 "No sports in common" 
+                       96 "Not applicable: no participation by respondent" 
+                       97 "Not asked" 98 "Not stated" ;
+label define hms_q105_rel_c 1 "Son" 2 "Daughter" 3 "Other relative" 7 "Not asked" 
+                       9 "Not stated, don't know" ;
+label define hms_q105_agegr5_c 1 "5 to 9" 2 "10 to 14" 
+                       7 "No children aged 5 to 14 in household, not asked, not stated" ;
+label define hms_q105_commonc 1 "One sport in common" 2 "Two sports in common" 
+                       3 "Three sports in common" 6 "No sports in common" 
+                       96 "Not applicable: no participation by respondent" 
+                       97 "Not asked" 98 "Not stated" ;
+label define hms_q105_rel_d 1 "Son" 2 "Daughter" 3 "Other relative" 7 "Not asked" 
+                       9 "Not stated, don't know" ;
+label define hms_q105_agegr5_d 1 "5 to 9" 2 "10 to 14" 
+                       7 "No children aged 5 to 14 in household, not asked, not stated" ;
+label define hms_q105_commond 1 "One sport in common" 2 "Two sports in common" 
+                       3 "Three sports in common" 6 "No sports in common" 
+                       96 "Not applicable: no participation by respondent" 
+                       97 "Not asked" 98 "Not stated" ;
+label define spc_sp03  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp04  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp12  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp14  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp15  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp16  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp20  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp23  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp31  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp32  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp34  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp35  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp37  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp39  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp41  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp42  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp47  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp52  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp64  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp65  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp71  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp73  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp80  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp81  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_sp84  1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c1 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c2 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c3 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c4 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c5 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c6 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define spc_spoth_c7 1 "At least one child participated in sport" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define att_q120  1 "All the time" 2 "Some of the time" 3 "Rarely" 
+                       4 "Never" 8 "Not stated" 9 "Don't know" ;
+label define att_q130  1 "All the time" 2 "Some of the time" 3 "Rarely" 
+                       4 "Never" 8 "Not stated" 9 "Don't know" ;
+label define att_q131  1 "All the time" 2 "Some of the time" 3 "Rarely" 
+                       4 "Never" 7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define att_q140  1 "Car, truck or van - as driver" 
+                       2 "Car, truck or van - as passenger" 
+                       3 "Public transit (e.g., bus, streetcar, subway, light-rail tra" 
+                       4 "Walk" 5 "Bicycle" 6 "Motorcycle" 7 "Taxicab" 
+                       8 "Other" 98 "Not stated" 99 "Don't know" ;
+label define att_q150  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define att_q160  1 "Every day" 2 "Several times a week" 
+                       3 "A few times a month" 4 "A few times a year" 
+                       5 "Not in past 12 months" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c06 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c07 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c08 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c09 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c10 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c11 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q170_c12 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define att_q180  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define ctw_q140_c01 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c02 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c03 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c04 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c05 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c06 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c07 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c08 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q140_c09 1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q150  997 "Not asked" 998 "Not stated" 999 "Don't know" ;
+label define ctw_q160  1 "Yes" 2 "No" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define ctw_q170  1 "Very convenient" 2 "Somewhat convenient" 
+                       3 "Somewhat inconvenient" 4 "Very inconvenient" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define ctw_q180  1 "Very convenient" 2 "Somewhat convenient" 
+                       3 "Somewhat inconvenient" 4 "Very inconvenient" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define ctw_q190  1 "Everyday" 2 "Three or four days" 
+                       3 "One or two days" 4 "Never" 5 "Not applicable" 
+                       7 "Not asked" 8 "Not stated" 9 "Don't know" ;
+label define ctw_q210  1 "Very dissatisfied with the time it took" 
+                       2 "Dissatisfied" 3 "Satisfied" 
+                       4 "Very satisfied with the time it took" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define ctw_q215  1 "Very serious" 2 "Serious" 3 "Not very serious" 
+                       4 "Not at all serious" 7 "Not asked" 8 "Not stated" 
+                       9 "Don't know" ;
+label define iur_q100  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define iur_q135  1 "... every day?" 2 "... several times a week?" 
+                       3 "... a few times a month?" 
+                       4 "... not in the last month?" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+label define iur_q140  1 "Yes" 2 "No" 8 "Not stated" 9 "Don't know" ;
+label define iur_q155  1 "... several times a week?" 
+                       2 "... a few times a month?" 
+                       3 "... a few times a year?" 
+                       4 "... not in the past year?" 7 "Not asked" 
+                       8 "Not stated" 9 "Don't know" ;
+
+
+#delimit cr
+
+*******************************************************************
+infile using X
+* Replace 'X' with the name of the dictionary file. 
+*
+* The contents of the dictionary are given at the end of this file.
+* Put the dictionary into a separate file (by editing this file).
+* Then specify here the name of the dictionary file.
+*******************************************************************
+* The md, min and max specifications were translated 
+* into the following "REPLACE...IF" statements:
+
+replace agegr5 = . if (agegr5 >= 97 & agegr5 <= 99)
+replace agegr10 = . if (agegr10 >= 7 & agegr10 <= 9)
+replace sex = . if (sex >= 7 & sex <= 9)
+replace marstat = . if (marstat >= 7 & marstat <= 9)
+replace ageprgrdif = . if (ageprgrdif >= 97 & ageprgrdif <= 99)
+replace sexpr = . if (sexpr >= 7 & sexpr <= 9)
+replace prtypec = . if (prtypec >= 7 & prtypec <= 9)
+replace chrflag = . if (chrflag >= 7 & chrflag <= 9)
+replace chrinhsdc = . if (chrinhsdc >= 7 & chrinhsdc <= 9)
+replace chr0014c = . if (chr0014c >= 7 & chr0014c <= 9)
+replace chrtime6 = . if (chrtime6 >= 7 & chrtime6 <= 9)
+replace chh0512c = . if (chh0512c >= 7 & chh0512c <= 9)
+replace chh0014c = . if (chh0014c >= 7 & chh0014c <= 9)
+replace parhsdc = . if (parhsdc >= 7 & parhsdc <= 9)
+replace livarr08 = . if (livarr08 >= 7 & livarr08 <= 9)
+replace livarr12 = . if (livarr12 >= 97 & livarr12 <= 99)
+replace hsdsizec = . if (hsdsizec >= 7 & hsdsizec <= 9)
+replace hsdeligc = . if (hsdeligc >= 7 & hsdeligc <= 9)
+replace famtype = . if (famtype >= 7 & famtype <= 9)
+replace multigen = . if (multigen >= 7 & multigen <= 9)
+replace mar_q100 = . if (mar_q100 >= 97 & mar_q100 <= 99)
+replace act7days = . if (act7days >= 7 & act7days <= 9)
+replace mar_q105 = . if (mar_q105 >= 7 & mar_q105 <= 9)
+replace mar_q133 = . if (mar_q133 >= 7 & mar_q133 <= 9)
+replace wkltwe = . if (wkltwe >= 7 & wkltwe <= 9)
+replace mar_q134 = . if (mar_q134 >= 7 & mar_q134 <= 9)
+replace mar_q135 = . if (mar_q135 >= 7 & mar_q135 <= 9)
+replace mar_q136 = . if (mar_q136 >= 7 & mar_q136 <= 9)
+replace mar_q172 = . if (mar_q172 >= 7 & mar_q172 <= 9)
+replace mar_q175 = . if (mar_q175 >= 7 & mar_q175 <= 9)
+replace mar_q190 = . if (mar_q190 >= 7 & mar_q190 <= 9)
+replace mar_q193 = . if (mar_q193 >= 97 & mar_q193 <= 99)
+replace naics2007_c16 = . if (naics2007_c16 >= 97 & naics2007_c16 <= 99)
+replace nocs2006_c10 = . if (nocs2006_c10 >= 97 & nocs2006_c10 <= 99)
+replace mar_q315 = . if (mar_q315 >= 7 & mar_q315 <= 9)
+replace naics2007_lwk_c16 = . if (naics2007_lwk_c16 >= 97 & naics2007_lwk_c16 <= 99)
+replace nocs2006_lwk_c10 = . if (nocs2006_lwk_c10 >= 97 & nocs2006_lwk_c10 <= 99)
+replace mar_q350 = . if (mar_q350 >= 7 & mar_q350 <= 9)
+replace mar_q364 = . if (mar_q364 >= 7 & mar_q364 <= 9)
+replace mar_q381 = . if (mar_q381 >= 7 & mar_q381 <= 9)
+replace lfsgss = . if (lfsgss >= 7 & lfsgss <= 9)
+replace lfshsd12 = . if (lfshsd12 >= 97 & lfshsd12 <= 99)
+replace mar_q388_c01 = . if (mar_q388_c01 >= 7 & mar_q388_c01 <= 9)
+replace mar_q388_c02 = . if (mar_q388_c02 >= 7 & mar_q388_c02 <= 9)
+replace mar_q388_c03 = . if (mar_q388_c03 >= 7 & mar_q388_c03 <= 9)
+replace mar_q388_c04 = . if (mar_q388_c04 >= 7 & mar_q388_c04 <= 9)
+replace mar_q388_c05 = . if (mar_q388_c05 >= 7 & mar_q388_c05 <= 9)
+replace mar_q388_c06 = . if (mar_q388_c06 >= 7 & mar_q388_c06 <= 9)
+replace mar_q388_c07 = . if (mar_q388_c07 >= 7 & mar_q388_c07 <= 9)
+replace mar_q388_c08 = . if (mar_q388_c08 >= 7 & mar_q388_c08 <= 9)
+replace mar_q388_c09 = . if (mar_q388_c09 >= 7 & mar_q388_c09 <= 9)
+replace mar_q388_c10 = . if (mar_q388_c10 >= 7 & mar_q388_c10 <= 9)
+replace mar_q410 = . if (mar_q410 >= 97 & mar_q410 <= 99)
+replace mar_q420 = . if (mar_q420 >= 7 & mar_q420 <= 9)
+replace mar_q510 = . if (mar_q510 >= 7 & mar_q510 <= 9)
+replace mar_q520_c01 = . if (mar_q520_c01 >= 7 & mar_q520_c01 <= 9)
+replace mar_q520_c02 = . if (mar_q520_c02 >= 7 & mar_q520_c02 <= 9)
+replace mar_q520_c03 = . if (mar_q520_c03 >= 7 & mar_q520_c03 <= 9)
+replace mar_q520_c04 = . if (mar_q520_c04 >= 7 & mar_q520_c04 <= 9)
+replace mar_q520_c05 = . if (mar_q520_c05 >= 7 & mar_q520_c05 <= 9)
+replace mar_q520_c06 = . if (mar_q520_c06 >= 7 & mar_q520_c06 <= 9)
+replace mar_q520_c07 = . if (mar_q520_c07 >= 7 & mar_q520_c07 <= 9)
+replace mar_q520_c08 = . if (mar_q520_c08 >= 7 & mar_q520_c08 <= 9)
+replace mar_q522 = . if (mar_q522 >= 7 & mar_q522 <= 9)
+replace mar_q523 = . if (mar_q523 >= 7 & mar_q523 <= 9)
+replace mar_q530_c01 = . if (mar_q530_c01 >= 7 & mar_q530_c01 <= 9)
+replace mar_q530_c02 = . if (mar_q530_c02 >= 7 & mar_q530_c02 <= 9)
+replace mar_q530_c03 = . if (mar_q530_c03 >= 7 & mar_q530_c03 <= 9)
+replace mar_q530_c04 = . if (mar_q530_c04 >= 7 & mar_q530_c04 <= 9)
+replace mar_q530_c05 = . if (mar_q530_c05 >= 7 & mar_q530_c05 <= 9)
+replace mar_q530_c06 = . if (mar_q530_c06 >= 7 & mar_q530_c06 <= 9)
+replace acmyr = . if (acmyr >= 97 & acmyr <= 99)
+replace mar_q550 = . if (mar_q550 >= 7 & mar_q550 <= 9)
+replace eduyr = . if (eduyr >= 97 & eduyr <= 99)
+replace eor_q110 = . if (eor_q110 >= 7 & eor_q110 <= 9)
+replace eor_q150 = . if (eor_q150 >= 7 & eor_q150 <= 9)
+replace edu5 = . if (edu5 >= 7 & edu5 <= 9)
+replace edu10 = . if (edu10 >= 97 & edu10 <= 99)
+replace eor_q210 = . if (eor_q210 >= 7 & eor_q210 <= 9)
+replace map_q100 = . if (map_q100 >= 97 & map_q100 <= 99)
+replace act7days_pr = . if (act7days_pr >= 97 & act7days_pr <= 99)
+replace map_q120 = . if (map_q120 >= 7 & map_q120 <= 9)
+replace wkwepr = . if (wkwepr >= 7 & wkwepr <= 9)
+replace map_q130 = . if (map_q130 >= 7 & map_q130 <= 9)
+replace map_q155 = . if (map_q155 >= 97 & map_q155 <= 99)
+replace map_q160 = . if (map_q160 >= 7 & map_q160 <= 9)
+replace map_q210 = . if (map_q210 >= 7 & map_q210 <= 9)
+replace map_q220 = . if (map_q220 >= 7 & map_q220 <= 9)
+replace map_q235 = . if (map_q235 >= 7 & map_q235 <= 9)
+replace map_q245 = . if (map_q245 >= 7 & map_q245 <= 9)
+replace map_q250 = . if (map_q250 >= 7 & map_q250 <= 9)
+replace edupr5 = . if (edupr5 >= 7 & edupr5 <= 9)
+replace edupr10 = . if (edupr10 >= 97 & edupr10 <= 99)
+replace edum5 = . if (edum5 >= 7 & edum5 <= 9)
+replace edum10 = . if (edum10 >= 97 & edum10 <= 99)
+replace eduf5 = . if (eduf5 >= 7 & eduf5 <= 9)
+replace eduf10 = . if (eduf10 >= 97 & eduf10 <= 99)
+replace dwelc = . if (dwelc >= 7 & dwelc <= 9)
+replace dwellown = . if (dwellown >= 7 & dwellown <= 9)
+replace live_dwelling = . if (live_dwelling >= 7 & live_dwelling <= 9)
+replace live_neigh = . if (live_neigh >= 7 & live_neigh <= 9)
+replace live_local = . if (live_local >= 7 & live_local <= 9)
+replace dor_q222 = . if (dor_q222 >= 7 & dor_q222 <= 9)
+replace dor_q227 = . if (dor_q227 >= 7 & dor_q227 <= 9)
+replace dor_q228 = . if (dor_q228 >= 7 & dor_q228 <= 9)
+replace dor_q229 = . if (dor_q229 >= 7 & dor_q229 <= 9)
+replace brthcan = . if (brthcan >= 7 & brthcan <= 9)
+replace brthprvc = . if (brthprvc >= 97 & brthprvc <= 99)
+replace brthregc = . if (brthregc >= 97 & brthregc <= 99)
+replace yrarri = . if (yrarri >= 97 & yrarri <= 99)
+replace agearrigrc = . if (agearrigrc >= 97 & agearrigrc <= 99)
+replace bpr_q50 = . if (bpr_q50 >= 7 & bpr_q50 <= 9)
+replace yrlndimm = . if (yrlndimm >= 97 & yrlndimm <= 99)
+replace agelndimmgrc = . if (agelndimmgrc >= 97 & agelndimmgrc <= 99)
+replace brthpcan = . if (brthpcan >= 7 & brthpcan <= 9)
+replace brthpprvc = . if (brthpprvc >= 97 & brthpprvc <= 99)
+replace brthpregc = . if (brthpregc >= 97 & brthpregc <= 99)
+replace brthmcan = . if (brthmcan >= 7 & brthmcan <= 9)
+replace brthmprvc = . if (brthmprvc >= 97 & brthmprvc <= 99)
+replace brthmregc = . if (brthmregc >= 97 & brthmregc <= 99)
+replace brthfcan = . if (brthfcan >= 7 & brthfcan <= 9)
+replace brthfprvc = . if (brthfprvc >= 97 & brthfprvc <= 99)
+replace brthfregc = . if (brthfregc >= 97 & brthfregc <= 99)
+replace air_q110 = . if (air_q110 >= 7 & air_q110 <= 9)
+replace aip_q110 = . if (aip_q110 >= 7 & aip_q110 <= 9)
+replace vismin = . if (vismin >= 7 & vismin <= 9)
+replace visminpr = . if (visminpr >= 7 & visminpr <= 9)
+replace religatt = . if (religatt >= 7 & religatt <= 9)
+replace rlr_q110 = . if (rlr_q110 >= 7 & rlr_q110 <= 9)
+replace rlr_q120 = . if (rlr_q120 >= 7 & rlr_q120 <= 9)
+replace relig6 = . if (relig6 >= 7 & relig6 <= 9)
+replace lanch = . if (lanch >= 97 & lanch <= 99)
+replace lanchsue = . if (lanchsue >= 7 & lanchsue <= 9)
+replace lanchsuf = . if (lanchsuf >= 7 & lanchsuf <= 9)
+replace lanchsuo = . if (lanchsuo >= 7 & lanchsuo <= 9)
+replace lanhsdc = . if (lanhsdc >= 7 & lanhsdc <= 9)
+replace inr_q025 = . if (inr_q025 >= 97 & inr_q025 <= 99)
+replace incm = . if (incm >= 97 & incm <= 99)
+replace incmmemc = . if (incmmemc >= 7 & incmmemc <= 9)
+replace incmhsd = . if (incmhsd >= 97 & incmhsd <= 99)
+replace prv = . if (prv >= 97 & prv <= 99)
+replace region = . if (region >= 7 & region <= 9)
+replace luc_rst = . if (luc_rst >= 7 & luc_rst <= 9)
+replace gtu_q110 = . if (gtu_q110 >= 7 & gtu_q110 <= 9)
+replace gtu_q130 = . if (gtu_q130 >= 7 & gtu_q130 <= 9)
+replace dvtday = . if (dvtday >= 7 & dvtday <= 9)
+replace tcs_q110 = . if (tcs_q110 >= 7 & tcs_q110 <= 9)
+replace tcs_q120 = . if (tcs_q120 >= 7 & tcs_q120 <= 9)
+replace tcs_q130 = . if (tcs_q130 >= 7 & tcs_q130 <= 9)
+replace tcs_q140 = . if (tcs_q140 >= 7 & tcs_q140 <= 9)
+replace tcs_q150 = . if (tcs_q150 >= 7 & tcs_q150 <= 9)
+replace tcs_q160 = . if (tcs_q160 >= 7 & tcs_q160 <= 9)
+replace tcs_q170 = . if (tcs_q170 >= 7 & tcs_q170 <= 9)
+replace tcs_q180 = . if (tcs_q180 >= 7 & tcs_q180 <= 9)
+replace tcs_q190 = . if (tcs_q190 >= 7 & tcs_q190 <= 9)
+replace tcs_q200 = . if (tcs_q200 >= 7 & tcs_q200 <= 9)
+replace timecr = . if (timecr >= 97 & timecr <= 99)
+replace timens = . if (timens >= 97 & timens <= 99)
+replace vcg_q300 = . if (vcg_q300 >= 7 & vcg_q300 <= 9)
+replace vcg_q310 = . if (vcg_q310 >= 7 & vcg_q310 <= 9)
+replace lsr_q100 = . if (lsr_q100 >= 97 & lsr_q100 <= 99)
+replace lsr_q130 = . if (lsr_q130 >= 97 & lsr_q130 <= 99)
+replace srh_q110 = . if (srh_q110 >= 7 & srh_q110 <= 9)
+replace srh_q115 = . if (srh_q115 >= 7 & srh_q115 <= 9)
+replace hal_q310 = . if (hal_q310 >= 7 & hal_q310 <= 9)
+replace hal_q320 = . if (hal_q320 >= 7 & hal_q320 <= 9)
+replace hal_q330 = . if (hal_q330 >= 7 & hal_q330 <= 9)
+replace hal_q340 = . if (hal_q340 >= 7 & hal_q340 <= 9)
+replace hal_q350 = . if (hal_q350 >= 7 & hal_q350 <= 9)
+replace hal_q360 = . if (hal_q360 >= 7 & hal_q360 <= 9)
+replace hal_q410 = . if (hal_q410 >= 7 & hal_q410 <= 9)
+replace hal_q420 = . if (hal_q420 >= 7 & hal_q420 <= 9)
+replace hal_q430 = . if (hal_q430 >= 7 & hal_q430 <= 9)
+replace hal_q440 = . if (hal_q440 >= 7 & hal_q440 <= 9)
+replace haldv = . if (haldv >= 7 & haldv <= 9)
+replace hal_q450 = . if (hal_q450 >= 7 & hal_q450 <= 9)
+replace mss_q110 = . if (mss_q110 >= 7 & mss_q110 <= 9)
+replace mss_q130 = . if (mss_q130 >= 97 & mss_q130 <= 99)
+replace lca_q110 = . if (lca_q110 >= 7 & lca_q110 <= 9)
+replace lca_q120 = . if (lca_q120 >= 7 & lca_q120 <= 9)
+replace lca_q130 = . if (lca_q130 >= 7 & lca_q130 <= 9)
+replace lca_q210 = . if (lca_q210 >= 7 & lca_q210 <= 9)
+replace lca_q220 = . if (lca_q220 >= 7 & lca_q220 <= 9)
+replace lca_q230 = . if (lca_q230 >= 7 & lca_q230 <= 9)
+replace lca_q240 = . if (lca_q240 >= 7 & lca_q240 <= 9)
+replace lca_q310 = . if (lca_q310 >= 7 & lca_q310 <= 9)
+replace lca_q320 = . if (lca_q320 >= 7 & lca_q320 <= 9)
+replace lca_q330 = . if (lca_q330 >= 7 & lca_q330 <= 9)
+replace lca_q340 = . if (lca_q340 >= 7 & lca_q340 <= 9)
+replace lca_q350 = . if (lca_q350 >= 7 & lca_q350 <= 9)
+replace lca_q360 = . if (lca_q360 >= 7 & lca_q360 <= 9)
+replace lca_q410 = . if (lca_q410 >= 7 & lca_q410 <= 9)
+replace lca_q420 = . if (lca_q420 >= 7 & lca_q420 <= 9)
+replace lca_q430 = . if (lca_q430 >= 7 & lca_q430 <= 9)
+replace lca_q440 = . if (lca_q440 >= 7 & lca_q440 <= 9)
+replace lca_q450 = . if (lca_q450 >= 7 & lca_q450 <= 9)
+replace spa_q100 = . if (spa_q100 >= 7 & spa_q100 <= 9)
+replace spa_sp02_c = . if (spa_sp02_c >= 7 & spa_sp02_c <= 9)
+replace sfr_sp02 = . if (sfr_sp02 >= 7 & sfr_sp02 <= 9)
+replace spa_sp03 = . if (spa_sp03 >= 7 & spa_sp03 <= 9)
+replace sfr_sp03 = . if (sfr_sp03 >= 7 & sfr_sp03 <= 9)
+replace sco_sp03_c01 = . if (sco_sp03_c01 >= 7 & sco_sp03_c01 <= 9)
+replace sco_sp03_c02 = . if (sco_sp03_c02 >= 7 & sco_sp03_c02 <= 9)
+replace sco_sp03_c0304 = . if (sco_sp03_c0304 >= 7 & sco_sp03_c0304 <= 9)
+replace sco_sp03_c05 = . if (sco_sp03_c05 >= 7 & sco_sp03_c05 <= 9)
+replace spa_sp04 = . if (spa_sp04 >= 7 & spa_sp04 <= 9)
+replace sfr_sp04 = . if (sfr_sp04 >= 7 & sfr_sp04 <= 9)
+replace sco_sp04_c01 = . if (sco_sp04_c01 >= 7 & sco_sp04_c01 <= 9)
+replace sco_sp04_c02 = . if (sco_sp04_c02 >= 7 & sco_sp04_c02 <= 9)
+replace sco_sp04_c0304 = . if (sco_sp04_c0304 >= 7 & sco_sp04_c0304 <= 9)
+replace sco_sp04_c05 = . if (sco_sp04_c05 >= 7 & sco_sp04_c05 <= 9)
+replace spa_sp07_c = . if (spa_sp07_c >= 7 & spa_sp07_c <= 9)
+replace sfr_sp07 = . if (sfr_sp07 >= 7 & sfr_sp07 <= 9)
+replace spa_sp08_c = . if (spa_sp08_c >= 7 & spa_sp08_c <= 9)
+replace sfr_sp08 = . if (sfr_sp08 >= 7 & sfr_sp08 <= 9)
+replace spa_sp10_c = . if (spa_sp10_c >= 7 & spa_sp10_c <= 9)
+replace sfr_sp10 = . if (sfr_sp10 >= 7 & sfr_sp10 <= 9)
+replace spa_sp12_c = . if (spa_sp12_c >= 7 & spa_sp12_c <= 9)
+replace sfr_sp12 = . if (sfr_sp12 >= 7 & sfr_sp12 <= 9)
+replace sco_sp12_c01 = . if (sco_sp12_c01 >= 7 & sco_sp12_c01 <= 9)
+replace sco_sp12_c02 = . if (sco_sp12_c02 >= 7 & sco_sp12_c02 <= 9)
+replace sco_sp12_c0304 = . if (sco_sp12_c0304 >= 7 & sco_sp12_c0304 <= 9)
+replace sco_sp12_c05 = . if (sco_sp12_c05 >= 7 & sco_sp12_c05 <= 9)
+replace spa_sp14 = . if (spa_sp14 >= 7 & spa_sp14 <= 9)
+replace sfr_sp14 = . if (sfr_sp14 >= 7 & sfr_sp14 <= 9)
+replace sco_sp14_c01 = . if (sco_sp14_c01 >= 7 & sco_sp14_c01 <= 9)
+replace sco_sp14_c02 = . if (sco_sp14_c02 >= 7 & sco_sp14_c02 <= 9)
+replace sco_sp14_c03 = . if (sco_sp14_c03 >= 7 & sco_sp14_c03 <= 9)
+replace sco_sp14_c04 = . if (sco_sp14_c04 >= 7 & sco_sp14_c04 <= 9)
+replace sco_sp14_c05 = . if (sco_sp14_c05 >= 7 & sco_sp14_c05 <= 9)
+replace spa_sp15 = . if (spa_sp15 >= 7 & spa_sp15 <= 9)
+replace sfr_sp15 = . if (sfr_sp15 >= 7 & sfr_sp15 <= 9)
+replace sco_sp15_c01 = . if (sco_sp15_c01 >= 7 & sco_sp15_c01 <= 9)
+replace sco_sp15_c02 = . if (sco_sp15_c02 >= 7 & sco_sp15_c02 <= 9)
+replace sco_sp15_c0304 = . if (sco_sp15_c0304 >= 7 & sco_sp15_c0304 <= 9)
+replace sco_sp15_c05 = . if (sco_sp15_c05 >= 7 & sco_sp15_c05 <= 9)
+replace spa_sp20 = . if (spa_sp20 >= 7 & spa_sp20 <= 9)
+replace sfr_sp20 = . if (sfr_sp20 >= 7 & sfr_sp20 <= 9)
+replace sco_sp20_c01 = . if (sco_sp20_c01 >= 7 & sco_sp20_c01 <= 9)
+replace sco_sp20_c02 = . if (sco_sp20_c02 >= 7 & sco_sp20_c02 <= 9)
+replace sco_sp20_c0304 = . if (sco_sp20_c0304 >= 7 & sco_sp20_c0304 <= 9)
+replace sco_sp20_c05 = . if (sco_sp20_c05 >= 7 & sco_sp20_c05 <= 9)
+replace spa_sp25_c = . if (spa_sp25_c >= 7 & spa_sp25_c <= 9)
+replace sfr_sp25 = . if (sfr_sp25 >= 7 & sfr_sp25 <= 9)
+replace spa_sp29_c = . if (spa_sp29_c >= 7 & spa_sp29_c <= 9)
+replace sfr_sp29 = . if (sfr_sp29 >= 7 & sfr_sp29 <= 9)
+replace sco_sp29_c01 = . if (sco_sp29_c01 >= 7 & sco_sp29_c01 <= 9)
+replace sco_sp29_c02 = . if (sco_sp29_c02 >= 7 & sco_sp29_c02 <= 9)
+replace sco_sp29_c0304 = . if (sco_sp29_c0304 >= 7 & sco_sp29_c0304 <= 9)
+replace sco_sp29_c05 = . if (sco_sp29_c05 >= 7 & sco_sp29_c05 <= 9)
+replace spa_sp31_c = . if (spa_sp31_c >= 7 & spa_sp31_c <= 9)
+replace sfr_sp31 = . if (sfr_sp31 >= 7 & sfr_sp31 <= 9)
+replace spa_sp34 = . if (spa_sp34 >= 7 & spa_sp34 <= 9)
+replace sfr_sp34 = . if (sfr_sp34 >= 7 & sfr_sp34 <= 9)
+replace sco_sp34_c01 = . if (sco_sp34_c01 >= 7 & sco_sp34_c01 <= 9)
+replace sco_sp34_c02 = . if (sco_sp34_c02 >= 7 & sco_sp34_c02 <= 9)
+replace sco_sp34_c0304 = . if (sco_sp34_c0304 >= 7 & sco_sp34_c0304 <= 9)
+replace sco_sp34_c05 = . if (sco_sp34_c05 >= 7 & sco_sp34_c05 <= 9)
+replace spa_sp35 = . if (spa_sp35 >= 7 & spa_sp35 <= 9)
+replace sfr_sp35 = . if (sfr_sp35 >= 7 & sfr_sp35 <= 9)
+replace sco_sp35_c01 = . if (sco_sp35_c01 >= 7 & sco_sp35_c01 <= 9)
+replace sco_sp35_c02 = . if (sco_sp35_c02 >= 7 & sco_sp35_c02 <= 9)
+replace sco_sp35_c0304 = . if (sco_sp35_c0304 >= 7 & sco_sp35_c0304 <= 9)
+replace sco_sp35_c05 = . if (sco_sp35_c05 >= 7 & sco_sp35_c05 <= 9)
+replace spa_sp36_c = . if (spa_sp36_c >= 7 & spa_sp36_c <= 9)
+replace sfr_sp36 = . if (sfr_sp36 >= 7 & sfr_sp36 <= 9)
+replace spa_sp37_c = . if (spa_sp37_c >= 7 & spa_sp37_c <= 9)
+replace sfr_sp37 = . if (sfr_sp37 >= 7 & sfr_sp37 <= 9)
+replace spa_sp39_c = . if (spa_sp39_c >= 7 & spa_sp39_c <= 9)
+replace sfr_sp39 = . if (sfr_sp39 >= 7 & sfr_sp39 <= 9)
+replace spa_sp42 = . if (spa_sp42 >= 7 & spa_sp42 <= 9)
+replace sfr_sp42 = . if (sfr_sp42 >= 7 & sfr_sp42 <= 9)
+replace sco_sp42_c01 = . if (sco_sp42_c01 >= 7 & sco_sp42_c01 <= 9)
+replace sco_sp42_c02 = . if (sco_sp42_c02 >= 7 & sco_sp42_c02 <= 9)
+replace sco_sp42_c0304 = . if (sco_sp42_c0304 >= 7 & sco_sp42_c0304 <= 9)
+replace sco_sp42_c05 = . if (sco_sp42_c05 >= 7 & sco_sp42_c05 <= 9)
+replace spa_sp44 = . if (spa_sp44 >= 7 & spa_sp44 <= 9)
+replace sfr_sp44 = . if (sfr_sp44 >= 7 & sfr_sp44 <= 9)
+replace spa_sp46_c = . if (spa_sp46_c >= 7 & spa_sp46_c <= 9)
+replace sfr_sp46 = . if (sfr_sp46 >= 7 & sfr_sp46 <= 9)
+replace spa_sp47_c = . if (spa_sp47_c >= 7 & spa_sp47_c <= 9)
+replace sfr_sp47 = . if (sfr_sp47 >= 7 & sfr_sp47 <= 9)
+replace spa_sp48 = . if (spa_sp48 >= 7 & spa_sp48 <= 9)
+replace sfr_sp48 = . if (sfr_sp48 >= 7 & sfr_sp48 <= 9)
+replace spa_sp52 = . if (spa_sp52 >= 7 & spa_sp52 <= 9)
+replace sfr_sp52 = . if (sfr_sp52 >= 7 & sfr_sp52 <= 9)
+replace sco_sp52_c01 = . if (sco_sp52_c01 >= 7 & sco_sp52_c01 <= 9)
+replace sco_sp52_c02 = . if (sco_sp52_c02 >= 7 & sco_sp52_c02 <= 9)
+replace sco_sp52_c0304 = . if (sco_sp52_c0304 >= 7 & sco_sp52_c0304 <= 9)
+replace sco_sp52_c05 = . if (sco_sp52_c05 >= 7 & sco_sp52_c05 <= 9)
+replace spa_sp55_c = . if (spa_sp55_c >= 7 & spa_sp55_c <= 9)
+replace sfr_sp55 = . if (sfr_sp55 >= 7 & sfr_sp55 <= 9)
+replace spa_sp57 = . if (spa_sp57 >= 7 & spa_sp57 <= 9)
+replace sfr_sp57 = . if (sfr_sp57 >= 7 & sfr_sp57 <= 9)
+replace sco_sp57_c01 = . if (sco_sp57_c01 >= 7 & sco_sp57_c01 <= 9)
+replace sco_sp57_c02 = . if (sco_sp57_c02 >= 7 & sco_sp57_c02 <= 9)
+replace sco_sp57_c03 = . if (sco_sp57_c03 >= 7 & sco_sp57_c03 <= 9)
+replace sco_sp57_c0304 = . if (sco_sp57_c0304 >= 7 & sco_sp57_c0304 <= 9)
+replace sco_sp57_c04 = . if (sco_sp57_c04 >= 7 & sco_sp57_c04 <= 9)
+replace sco_sp57_c05 = . if (sco_sp57_c05 >= 7 & sco_sp57_c05 <= 9)
+replace spa_sp62_c = . if (spa_sp62_c >= 7 & spa_sp62_c <= 9)
+replace sfr_sp62 = . if (sfr_sp62 >= 7 & sfr_sp62 <= 9)
+replace spa_sp65 = . if (spa_sp65 >= 7 & spa_sp65 <= 9)
+replace sfr_sp65 = . if (sfr_sp65 >= 7 & sfr_sp65 <= 9)
+replace sco_sp65_c01 = . if (sco_sp65_c01 >= 7 & sco_sp65_c01 <= 9)
+replace sco_sp65_c02 = . if (sco_sp65_c02 >= 7 & sco_sp65_c02 <= 9)
+replace sco_sp65_c0304 = . if (sco_sp65_c0304 >= 7 & sco_sp65_c0304 <= 9)
+replace sco_sp65_c05 = . if (sco_sp65_c05 >= 7 & sco_sp65_c05 <= 9)
+replace spa_sp71_c = . if (spa_sp71_c >= 7 & spa_sp71_c <= 9)
+replace sfr_sp71 = . if (sfr_sp71 >= 7 & sfr_sp71 <= 9)
+replace spa_sp73_c = . if (spa_sp73_c >= 7 & spa_sp73_c <= 9)
+replace sfr_sp73 = . if (sfr_sp73 >= 7 & sfr_sp73 <= 9)
+replace spa_sp77_c = . if (spa_sp77_c >= 7 & spa_sp77_c <= 9)
+replace sfr_sp77 = . if (sfr_sp77 >= 7 & sfr_sp77 <= 9)
+replace spa_sp80_c = . if (spa_sp80_c >= 7 & spa_sp80_c <= 9)
+replace sfr_sp80 = . if (sfr_sp80 >= 7 & sfr_sp80 <= 9)
+replace spa_sp84_c = . if (spa_sp84_c >= 7 & spa_sp84_c <= 9)
+replace sfr_sp84 = . if (sfr_sp84 >= 7 & sfr_sp84 <= 9)
+replace spa_sp85_c = . if (spa_sp85_c >= 7 & spa_sp85_c <= 9)
+replace spa_spoth_c1 = . if (spa_spoth_c1 >= 7 & spa_spoth_c1 <= 9)
+replace spa_spoth_c2 = . if (spa_spoth_c2 >= 7 & spa_spoth_c2 <= 9)
+replace spa_spoth_c3 = . if (spa_spoth_c3 >= 7 & spa_spoth_c3 <= 9)
+replace spa_spoth_c4 = . if (spa_spoth_c4 >= 7 & spa_spoth_c4 <= 9)
+replace spa_spoth_c5 = . if (spa_spoth_c5 >= 7 & spa_spoth_c5 <= 9)
+replace spa_spoth_c6 = . if (spa_spoth_c6 >= 7 & spa_spoth_c6 <= 9)
+replace spa_spoth_c7 = . if (spa_spoth_c7 >= 7 & spa_spoth_c7 <= 9)
+replace sp00_91 = . if (sp00_91 >= 7 & sp00_91 <= 9)
+replace sp01_91 = . if (sp01_91 >= 7 & sp01_91 <= 9)
+replace spa_q200 = . if (spa_q200 >= 7 & spa_q200 <= 9)
+replace spa_q210_tot = . if (spa_q210_tot >= 7 & spa_q210_tot <= 9)
+replace spa_q270 = . if (spa_q270 >= 7 & spa_q270 <= 9)
+replace spa_q310 = . if (spa_q310 >= 7 & spa_q310 <= 9)
+replace spa_q320 = . if (spa_q320 >= 7 & spa_q320 <= 9)
+replace spa_q330 = . if (spa_q330 >= 7 & spa_q330 <= 9)
+replace spa_q340 = . if (spa_q340 >= 7 & spa_q340 <= 9)
+replace spa_q350 = . if (spa_q350 >= 7 & spa_q350 <= 9)
+replace spa_q410_c01 = . if (spa_q410_c01 >= 7 & spa_q410_c01 <= 9)
+replace spa_q410_c02 = . if (spa_q410_c02 >= 7 & spa_q410_c02 <= 9)
+replace spa_q410_c03 = . if (spa_q410_c03 >= 7 & spa_q410_c03 <= 9)
+replace spa_q410_c04 = . if (spa_q410_c04 >= 7 & spa_q410_c04 <= 9)
+replace spa_q410_c05 = . if (spa_q410_c05 >= 7 & spa_q410_c05 <= 9)
+replace spa_q410_c06 = . if (spa_q410_c06 >= 7 & spa_q410_c06 <= 9)
+replace spa_q410_c07 = . if (spa_q410_c07 >= 7 & spa_q410_c07 <= 9)
+replace spa_q410_c08 = . if (spa_q410_c08 >= 7 & spa_q410_c08 <= 9)
+replace spa_q410_c09 = . if (spa_q410_c09 >= 7 & spa_q410_c09 <= 9)
+replace spa_q410_c10 = . if (spa_q410_c10 >= 7 & spa_q410_c10 <= 9)
+replace spa_q410_c11 = . if (spa_q410_c11 >= 7 & spa_q410_c11 <= 9)
+replace spa_q410_c12 = . if (spa_q410_c12 >= 7 & spa_q410_c12 <= 9)
+replace spa_q420 = . if (spa_q420 >= 7 & spa_q420 <= 9)
+replace spa_q430 = . if (spa_q430 >= 7 & spa_q430 <= 9)
+replace spa_q440 = . if (spa_q440 >= 7 & spa_q440 <= 9)
+replace spa_q450 = . if (spa_q450 >= 7 & spa_q450 <= 9)
+replace spc_sp02 = . if (spc_sp02 >= 7 & spc_sp02 <= 9)
+replace sfr_sp85 = . if (sfr_sp85 >= 7 & sfr_sp85 <= 9)
+replace spp_q110 = . if (spp_q110 >= 7 & spp_q110 <= 9)
+replace hms_q105_tot_c = . if (hms_q105_tot_c >= 7 & hms_q105_tot_c <= 9)
+replace hms_q105_rel_a = . if (hms_q105_rel_a >= 7 & hms_q105_rel_a <= 9)
+replace hms_q105_agegr5_a = . if (hms_q105_agegr5_a >= 7 & hms_q105_agegr5_a <= 9)
+replace hms_q105_commona = . if (hms_q105_commona >= 97 & hms_q105_commona <= 99)
+replace hms_q105_rel_b = . if (hms_q105_rel_b >= 7 & hms_q105_rel_b <= 9)
+replace hms_q105_agegr5_b = . if (hms_q105_agegr5_b >= 7 & hms_q105_agegr5_b <= 9)
+replace hms_q105_commonb = . if (hms_q105_commonb >= 97 & hms_q105_commonb <= 99)
+replace hms_q105_rel_c = . if (hms_q105_rel_c >= 7 & hms_q105_rel_c <= 9)
+replace hms_q105_agegr5_c = . if (hms_q105_agegr5_c >= 7 & hms_q105_agegr5_c <= 9)
+replace hms_q105_commonc = . if (hms_q105_commonc >= 97 & hms_q105_commonc <= 99)
+replace hms_q105_rel_d = . if (hms_q105_rel_d >= 7 & hms_q105_rel_d <= 9)
+replace hms_q105_agegr5_d = . if (hms_q105_agegr5_d >= 7 & hms_q105_agegr5_d <= 9)
+replace hms_q105_commond = . if (hms_q105_commond >= 97 & hms_q105_commond <= 99)
+replace spc_sp03 = . if (spc_sp03 >= 7 & spc_sp03 <= 9)
+replace spc_sp04 = . if (spc_sp04 >= 7 & spc_sp04 <= 9)
+replace spc_sp12 = . if (spc_sp12 >= 7 & spc_sp12 <= 9)
+replace spc_sp14 = . if (spc_sp14 >= 7 & spc_sp14 <= 9)
+replace spc_sp15 = . if (spc_sp15 >= 7 & spc_sp15 <= 9)
+replace spc_sp16 = . if (spc_sp16 >= 7 & spc_sp16 <= 9)
+replace spc_sp20 = . if (spc_sp20 >= 7 & spc_sp20 <= 9)
+replace spc_sp23 = . if (spc_sp23 >= 7 & spc_sp23 <= 9)
+replace spc_sp31 = . if (spc_sp31 >= 7 & spc_sp31 <= 9)
+replace spc_sp32 = . if (spc_sp32 >= 7 & spc_sp32 <= 9)
+replace spc_sp34 = . if (spc_sp34 >= 7 & spc_sp34 <= 9)
+replace spc_sp35 = . if (spc_sp35 >= 7 & spc_sp35 <= 9)
+replace spc_sp37 = . if (spc_sp37 >= 7 & spc_sp37 <= 9)
+replace spc_sp39 = . if (spc_sp39 >= 7 & spc_sp39 <= 9)
+replace spc_sp41 = . if (spc_sp41 >= 7 & spc_sp41 <= 9)
+replace spc_sp42 = . if (spc_sp42 >= 7 & spc_sp42 <= 9)
+replace spc_sp47 = . if (spc_sp47 >= 7 & spc_sp47 <= 9)
+replace spc_sp52 = . if (spc_sp52 >= 7 & spc_sp52 <= 9)
+replace spc_sp64 = . if (spc_sp64 >= 7 & spc_sp64 <= 9)
+replace spc_sp65 = . if (spc_sp65 >= 7 & spc_sp65 <= 9)
+replace spc_sp71 = . if (spc_sp71 >= 7 & spc_sp71 <= 9)
+replace spc_sp73 = . if (spc_sp73 >= 7 & spc_sp73 <= 9)
+replace spc_sp80 = . if (spc_sp80 >= 7 & spc_sp80 <= 9)
+replace spc_sp81 = . if (spc_sp81 >= 7 & spc_sp81 <= 9)
+replace spc_sp84 = . if (spc_sp84 >= 7 & spc_sp84 <= 9)
+replace spc_spoth_c1 = . if (spc_spoth_c1 >= 7 & spc_spoth_c1 <= 9)
+replace spc_spoth_c2 = . if (spc_spoth_c2 >= 7 & spc_spoth_c2 <= 9)
+replace spc_spoth_c3 = . if (spc_spoth_c3 >= 7 & spc_spoth_c3 <= 9)
+replace spc_spoth_c4 = . if (spc_spoth_c4 >= 7 & spc_spoth_c4 <= 9)
+replace spc_spoth_c5 = . if (spc_spoth_c5 >= 7 & spc_spoth_c5 <= 9)
+replace spc_spoth_c6 = . if (spc_spoth_c6 >= 7 & spc_spoth_c6 <= 9)
+replace spc_spoth_c7 = . if (spc_spoth_c7 >= 7 & spc_spoth_c7 <= 9)
+replace att_q120 = . if (att_q120 >= 7 & att_q120 <= 9)
+replace att_q130 = . if (att_q130 >= 7 & att_q130 <= 9)
+replace att_q131 = . if (att_q131 >= 7 & att_q131 <= 9)
+replace att_q140 = . if (att_q140 >= 97 & att_q140 <= 99)
+replace att_q150 = . if (att_q150 >= 7 & att_q150 <= 9)
+replace att_q160 = . if (att_q160 >= 7 & att_q160 <= 9)
+replace att_q170_c01 = . if (att_q170_c01 >= 7 & att_q170_c01 <= 9)
+replace att_q170_c02 = . if (att_q170_c02 >= 7 & att_q170_c02 <= 9)
+replace att_q170_c03 = . if (att_q170_c03 >= 7 & att_q170_c03 <= 9)
+replace att_q170_c04 = . if (att_q170_c04 >= 7 & att_q170_c04 <= 9)
+replace att_q170_c05 = . if (att_q170_c05 >= 7 & att_q170_c05 <= 9)
+replace att_q170_c06 = . if (att_q170_c06 >= 7 & att_q170_c06 <= 9)
+replace att_q170_c07 = . if (att_q170_c07 >= 7 & att_q170_c07 <= 9)
+replace att_q170_c08 = . if (att_q170_c08 >= 7 & att_q170_c08 <= 9)
+replace att_q170_c09 = . if (att_q170_c09 >= 7 & att_q170_c09 <= 9)
+replace att_q170_c10 = . if (att_q170_c10 >= 7 & att_q170_c10 <= 9)
+replace att_q170_c11 = . if (att_q170_c11 >= 7 & att_q170_c11 <= 9)
+replace att_q170_c12 = . if (att_q170_c12 >= 7 & att_q170_c12 <= 9)
+replace att_q180 = . if (att_q180 >= 7 & att_q180 <= 9)
+replace ctw_q140_c01 = . if (ctw_q140_c01 >= 7 & ctw_q140_c01 <= 9)
+replace ctw_q140_c02 = . if (ctw_q140_c02 >= 7 & ctw_q140_c02 <= 9)
+replace ctw_q140_c03 = . if (ctw_q140_c03 >= 7 & ctw_q140_c03 <= 9)
+replace ctw_q140_c04 = . if (ctw_q140_c04 >= 7 & ctw_q140_c04 <= 9)
+replace ctw_q140_c05 = . if (ctw_q140_c05 >= 7 & ctw_q140_c05 <= 9)
+replace ctw_q140_c06 = . if (ctw_q140_c06 >= 7 & ctw_q140_c06 <= 9)
+replace ctw_q140_c07 = . if (ctw_q140_c07 >= 7 & ctw_q140_c07 <= 9)
+replace ctw_q140_c08 = . if (ctw_q140_c08 >= 7 & ctw_q140_c08 <= 9)
+replace ctw_q140_c09 = . if (ctw_q140_c09 >= 7 & ctw_q140_c09 <= 9)
+replace ctw_q160 = . if (ctw_q160 >= 7 & ctw_q160 <= 9)
+replace ctw_q170 = . if (ctw_q170 >= 7 & ctw_q170 <= 9)
+replace ctw_q180 = . if (ctw_q180 >= 7 & ctw_q180 <= 9)
+replace ctw_q190 = . if (ctw_q190 >= 7 & ctw_q190 <= 9)
+replace ctw_q210 = . if (ctw_q210 >= 7 & ctw_q210 <= 9)
+replace ctw_q215 = . if (ctw_q215 >= 7 & ctw_q215 <= 9)
+replace iur_q100 = . if (iur_q100 >= 7 & iur_q100 <= 9)
+replace iur_q135 = . if (iur_q135 >= 7 & iur_q135 <= 9)
+replace iur_q140 = . if (iur_q140 >= 7 & iur_q140 <= 9)
+replace iur_q155 = . if (iur_q155 >= 7 & iur_q155 <= 9)

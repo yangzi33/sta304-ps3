@@ -38,10 +38,10 @@ library(janitor)
 library(tidyverse)
 
 # Load the data dictionary and the raw data and correct the variable names
-raw_data <- read_csv("AA8MGinv.csv")
-dict <- read_lines("gss_dict.txt", skip = 18) # skip is because of preamble content
+raw_data <- read_csv("rohan-cleaning/AA8sAGB8.csv")
+dict <- read_lines("rohan-cleaning/gss_dict.txt", skip = 18) # skip is because of preamble content
 # Now we need the labels because these are the actual responses that we need
-labels_raw <- read_file("gss_labels.txt")
+labels_raw <- read_file("rohan-cleaning/gss_labels.txt")
 
 
 #### Set-up the dictionary ####

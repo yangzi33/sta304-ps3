@@ -1,6 +1,6 @@
 ---
-title: "Investigating Relationship Between Mental Health and Annual Income using Logistic Regression"
-subtitle: "STA304H1, Fall 2020"
+title: "Investigating Relationship Between Annual Income and Mental Health Status using Logistic Regression"
+subtitle: "Findings from a General Social Survey"
 author: 
     - Boyu Cao
     - Jiayi Yu
@@ -8,7 +8,7 @@ author:
     - Ziyue Yang
 date: "October 19^th^, 2020"
 output: pdf_document
-abstract: "This is an abstract. (.)"
+abstract: "We investigate the relation"
 ---
 
 
@@ -22,7 +22,7 @@ library(brms)
 source('model.R')
 
 # Configuring global figure settings
-knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE)
+knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE, warning = FALSE)
 
 ```
 
@@ -58,9 +58,6 @@ The following plots illustrates the distribution of each age group
 ```{r, echo=FALSE}
 raw_bar <- ggplot(df, aes(y = mental_health, fill = annual_income)) + geom_bar() + labs(title = "Figure 1. Proportion of Mental Health Status Grouped by Annual Income", fill = "Annual Income", subtitle = "Source: Cleaned Dataset.") + ylab("Mental Health Indicator")
 raw_bar
-
-raw_scatter <- ggplot(df, aes(y = mental_dummy, x = uniform_income)) + geom_point()
-raw_scatter
 ```
 
 
@@ -72,13 +69,13 @@ We choose to use a **Logistic Regression Model** (Page 154, Wu, Thompson) on ann
 
 Specifically, suppose that the value of mental health measure is denoted $Y$, and 
 
-- the amount of annual income is denoted $X_1$,
+- the amount of annual income is denoted $X_1$;
 
-- each of the six age groups are denoted $X_2,X_3,X_4,X_5,X_6,X_7$, respectively in an increasing order,
+- each of the six age groups are denoted $X_2,X_3,X_4,X_5,X_6,X_7$, respectively in an increasing order;
 
 - marital statuses: Living common-law, Married, Separated, Single, Widowed are denoted $X_8,X_9,X_{10},X_{11},X_{12}$, respectively.
 
-- Male gender is denoted $X_13$. 
+- gender *male* is denoted $X_13$.
 
 Furthermore, we have an intercept term $\beta_0$, and slope terms $\beta_1,\beta_2,\beta_3,\dots,\beta_{13}$ that we wish to predict throughout.
 
@@ -102,7 +99,7 @@ Then, we perform a linearization on $p$ using a logit transformation defined as
 \log\left( \frac{p}{1-p} \right)=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\dots+\beta_{13}X_{13},
 \end{equation}
 
-based on which we examine the relationship between mental health and income. We wish to estimate model by estimating the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
+based on which we examine the relationship between mental health and income. We fit model using function `glm()`, and estimate the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
 
 <!-- Based on $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$, we can predict mental health of a response outcomes by the annual income -->
 
@@ -133,17 +130,32 @@ From the table, we have the following estimated coefficients:
 - $\hat{\beta_{12}}=0.0353$,
 - $\hat{\beta_{13}}=-0.0527$,
 
+**How do we interpret the coefficients?**
 
 
 # Discussion (.)
 
+## Why Logistic Model over Linear Model?
+
+When it comes to regression analysis, one's first impulse would likely be using the linear regression model, where
+$E(Y)=p$ is the dependent variable. Then the model would be
+
+\begin{equation}\label{linearModel}
+p=\beta_0+\beta_1X_1+\beta_2X_2+\dots+\beta_{13}X_{13},
+\end{equation}
+
+(residuals are omitted here, as we are referring to the expected value.)
+
+Nonetheless, the problems occurred has already been discussed in the lecture, as fitting a linear model to the following  will have resulting residuals not identically distributed.
+
+```{r, echo=FALSE}
+raw_scatter <- ggplot(df, aes(y = mental_dummy, x = uniform_income)) + geom_point() + xlab("Annual Income ($)") + ylab("Mental Health Status") + labs(title = "Figure 2. Linear Model on Mental Health Status versus Annual Income") + stat_smooth(method = "lm", col = "red")
+raw_scatter
+```
+
+Suppose we use a linear model over a logistic model. The variance of models
+
 ## Weaknesses and Potential Improvements
-
-**Why Logistic Model over Linear Model?**
-
-
-
-**Outcome Variable**
 
 One of the major weaknesses in our model is that we do not know the specific amount of annual income of samples, but merely the range, which makes the feature `annual income` categorical, making it difficult to fit a regression model. We managed to avoid the problem by generating a random value that lies between the income interval for each sample; nonetheless, 
 
@@ -178,5 +190,7 @@ One of the major weaknesses in our model is that we do not know the specific amo
   https://CRAN.R-project.org/package=janitor
 
 * Sareen J, Afifi TO, McMillan KA, Asmundson GJG. Relationship Between Household Income and Mental Disorders: Findings   From a Population-Based Longitudinal Study. Arch Gen Psychiatry. 2011;68(4):419–427. doi:10.1001/archgenpsychiatry.2011.15
+
+* H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
 
 # Appendix (. Optional)
