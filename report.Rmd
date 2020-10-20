@@ -1,6 +1,6 @@
 ---
-title: "Report Title (.)"
-subtitle: "https://github.com/yangzi33/sta304-ps3"
+title: "Investigating Relationship Between Mental Health and Annual Income using Logistic Regression"
+subtitle: "STA304H1, Fall 2020"
 author: 
     - Boyu Cao
     - Jiayi Yu
@@ -15,36 +15,35 @@ abstract: "This is an abstract. (.)"
 ```{r setup, include=FALSE, cache=FALSE}
 # Setting seed as the last four digits of Ziyue Yang's student number
 set.seed(4759)
+library(kableExtra)
 library(tidyverse)
 library(brms)
+
 # Run modeling
 source('model.R')
 
 # Configuring global figure settings
-knitr::opts_chunk$set(fig.height=3, fig.width=6, echo = FALSE)
-
-# df <- read.csv('gss-time-stress/gss-time-stress.csv')
-# df
+knitr::opts_chunk$set(fig.height=5, fig.width=10, echo = FALSE)
 
 ```
 
 # Introduction (.)
 
-A topic that intrigues us is the relationship of marital status to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will the focus our analyses. 
+A topic that intrigues us is the relationship of marital status to subjective well-being of individuals. One of the measurement of well-being is reported mental health, which will be the focus of our analyses. 
 
 *In the modern society, there exists various issues. (blah blah blah)*
 
 # Data (.)
 
-Throughout the article, regression models will be illustrated using data from the twenty fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010^[1]^. 
+Throughout the article, regression models will be illustrated using data from the twenty fourth cycle of the  **General Social Survey (GSS)** on time-stress and well-being, collected in 2010. The csv data of selected features is available at https://github.com/yangzi33/sta304-ps3.
 
 The target population for this survey includes all persons 15 years of age and older in Canada, excluding residents of the Yukon, Northwest Territories, and Nunavut, as well as full-time residents of institutions. Computer assisted telephone interviewing was used to collect data for GSS, and households were reached by calling a series of randomly-generated phone numbers.
 
-In the GSS, mental health is assessed by a question asking "In general, would you say your mental health is: ...", with provided answers "Excellent, Very Good, Good, Fair", or "Don't know" for those who are unsure about answering. Of the total of 15,390 respondents in the survey, 203 did not choose to answer, and 45 answered "Don't know". Therefore, analyses in our report are based on 15,142 respondents providing valid answers to this question. 
+In the GSS, mental health is assessed by a question asking "In general, would you say your mental health is: ...", with provided answers "Excellent, Very Good, Good, Fair, Poor", or "Don't know" for those who are unsure about answering. Of the total of 15,390 respondents in the survey, 203 did not choose to answer, and 45 answered "Don't know". Therefore, analyses in our report are based on 15,142 respondents providing valid answers to this question. 
 
-Due to the fact that there are merely four values, we treat them as a binary variable, by coding value $1$ for those who answered "Excellent" and "Very Good", and $0$ otherwise. The mean of this binary variable is 0.608 or 7224/11873, the proportion of those who are "mentally healthy" in the sample, denoted $p$, which can be viewed as the probability that a randomly selected sample will be "mentally healthy".
+Due to the fact that there are merely four values, we treat them as a binary variable, by coding value $1$ for those who answered "Excellent" or "Very Good", and $0$ otherwise. The mean of this binary variable is 0.608 or 7224/11873, the proportion of those who are "mentally healthy" in the sample, denoted $p$, which can be viewed as the probability that a randomly selected sample will be "mentally healthy".
 
-Our focus will be modeling mental health as a function of various variables. Two of the independent variables are treated as interval: age, income, while gender and marital status will be dummies. We will examine the relationship between mental health and marital status.
+Our focus will be modeling mental health as a function of various variables. Two of the independent variables are treated as interval: age, income, while gender and marital status will be dummies. We will examine the relationship between mental health and marital status. Additionally, since the income groups are grouped by income intervals, which makes it challenging to perform logistic regression. Hence for each sample, we generate a uniformly random number that lies between the income interval of the sample using the `runif()` function.
 
 <!-- - Marital status: single, married, living common-law, divorced, and widowed. This will be the main response variable -->
 <!-- - Age group of the respondent: by groups of 10 such as "45 to 54". -->
@@ -55,26 +54,69 @@ Our focus will be modeling mental health as a function of various variables. Two
 <!--   - 7788 -->
 <!--   - \$0 to \$49,999, \$50,000 to \$100,000, over \$100,000. -->
 
-
 ```{r, echo=FALSE}
-raw_plot <- ggplot(df, aes(x = marital, y = mental_dummy)) + geom_point()
-raw_plot
+raw_bar <- ggplot(df, aes(y = mental_health, fill = annual_income)) + geom_bar() + labs(title = "Figure 1. Proportion of Mental Health Status Grouped by Annual Income", fill = "Annual Income", subtitle = "Source: Cleaned Dataset.") + ylab("Mental Health Indicator")
+raw_bar
+
+raw_scatter <- ggplot(df, aes(y = mental_dummy, x = uniform_income)) + geom_point()
+raw_scatter
 ```
 
 *For each denoted $X_1,X_2,\dots,X_k$, .. respectively ... Consider ...*
 
-**Frame, Plot, Raw Plot**
+**Frame**
 
 
-# Model (.)
+# Model
+
+We choose to use a **Logistic Regression Model** (Page 154, Wu, Thompson) on annual income and mental health.
+
+
+Specifically, suppose that the value of mental health measure is denoted $Y$, and 
+  - the amount of annual income is denoted $X_1$,
+  - each of the six age groups are denoted $X_2,X_3,X_4,X_5,X_6,X_7$, respectively in an increasing order,
+  - marital statuses: Living common-law, Married, Separated, Single, Widowed are denoted $X_8,X_9,X_{10},X_{11},X_{12}$, respectively.
+  - Male gender is denoted $X_13$. 
+
+Furthermore, we have an intercept term $\beta_0$, and slope terms $\beta_1,\beta_2,\beta_3,\dots,\beta_{13}$ that we wish to predict throughout.
+
+With $p$ as the dependent variable, we write 
+$$
+p=\mathbb{P}(Y=1)=\frac{\exp(\beta_0+\sum_{i=1}^{13} \beta_iX_i)}{1+\exp(\beta_0+\sum^{13}_{i=1}\beta_iX_i)}.
+$$
+for some interception term $\beta_0$ and slope terms $\beta_1,\beta_2,\dots,\beta_n$.
+
+Then, we perform a linearization on $p$ using a logit transformation defined as
+$$
+\mbox{logit}(p):=\log\left(\frac{p}{1-p}\right),
+$$
+ such that the logistic regression becomes
+$$
+\log\left( \frac{p}{1-p} \right)=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+\dots+\beta_{14}X_{14},
+$$
+based on which we examine the relationship between mental health and income. We wish to estimate model by estimating the values of the intercept term and the slope terms as $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$. 
+
+<!-- Based on $\hat{\beta_0},\hat{\beta_1},\hat{\beta_2},\dots,\hat{\beta_n}$, we can predict mental health of a response outcomes by the annual income -->
 
 
 # Results (.)
 
+The following table contains a summary of fitted linearized logistic model:
+
+```{r, echo=FALSE}
+model_summary <- summary(logit_model)
+model_summary
+```
+
+From the table, we have the following estimated coefficients:
+
+- $\hat{\beta_0}=0.5277$
+- $\hat{\beta_1}=$
 
 # Discussion (.)
 
 ## Weaknesses and Potential Improvements
+
 
 
 # References (.)
